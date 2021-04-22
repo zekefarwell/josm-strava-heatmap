@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "JOSM Strava Heatmap",
+  "description": "JOSM Strava Heatmap",
+  "version": "1",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "permissions": [
+    "cookies",
+    "*://*.strava.com/*",
+    "clipboardWrite"
+],
+  "page_action": {
+    "show_matches": ["*://*.strava.com/*"],
+    "default_icon": {
+      "64": "icons/icon.png"
+    },
+    "default_popup": "pageAction/index.html",
+    "default_title": "JOSM Strava Heatmap"
+  },
+  "options_ui": {
+    "page": "options/index.html"
+  }
+}
