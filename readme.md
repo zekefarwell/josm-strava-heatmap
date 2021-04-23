@@ -15,4 +15,19 @@ OSM Wiki: [Using the Strava Heatmap][3]
 [2]: https://josm.openstreetmap.de/
 [3]: https://wiki.openstreetmap.org/wiki/Strava
 
+## Instructions
+
+1. Install the [Firefox Add-On][4] (Chrome extension is still pending approval)
+2. Visit [strava.com/heatmap][5] and log in – sign up for a free account if you don't have one
+3. Click the button pictured below to copy the TMS imagery url prepopulated with the required
+   `Key-Pair-Id`, `Policy`, and `Signature` parameters
+4. Add a new [JOSM imagery layer][6] called Strava Heatmap with the copied url (or update existing if you already have one)
+
 ![Screenshot of Strava Heatmap with button added](screenshot.png)
+
+[4]: https://addons.mozilla.org/en-US/firefox/addon/josm-strava-heatmap/
+[5]: https://www.strava.com/heatmap
+[6]: https://josm.openstreetmap.de/wiki/Help/Preferences/Imagery#SelectedEntries
+
+With a slight modification this url can be used as a custom background image in iD as well.
+For use in iD, remove `tms[3,20]:` from the beginning so it starts with `https://heatmap-external- ...`.
