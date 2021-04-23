@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "JOSM Strava Heatmap",
-  "description": "JOSM Strava Heatmap",
+  "description": "Add a button to the Strava Global Heatmap that copies the TMS imagery url for use in JOSM (Java OpenStreetMap Editor)",
   "version": "1",
   "icons": {
     "48": "icons/icon.png"
