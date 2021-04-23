@@ -26,5 +26,6 @@
       "browser-polyfill.min.js",
       "background.js"
     ]
-  }
+  },
+  "homepage_url": "https://github.com/zekefarwell/josm-strava-heatmap"
 }

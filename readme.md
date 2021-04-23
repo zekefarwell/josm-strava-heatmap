@@ -9,6 +9,8 @@ then assembling into a query string at the end of the url.  The keys expire afte
 week or so at which point you must repeat the process.  This extension builds the
 url for you which makes this weekly process a bit less annoying.  
 
+OSM Wiki: [Using the Strava Heatmap][3]
+
 [1]: https://www.strava.com/heatmap
 [2]: https://josm.openstreetmap.de/
 [3]: https://wiki.openstreetmap.org/wiki/Strava
