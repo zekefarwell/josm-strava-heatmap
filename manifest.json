@@ -4,19 +4,27 @@
   "description": "JOSM Strava Heatmap",
   "version": "1",
   "icons": {
-    "48": "icons/icon.svg"
+    "48": "icons/icon.png"
   },
   "permissions": [
     "cookies",
     "*://*.strava.com/*",
     "clipboardWrite"
-],
-  "page_action": {
-    "show_matches": ["*://*.strava.com/*"],
-    "default_icon": {
-      "48": "icons/icon.svg"
-    },
-    "default_popup": "pageAction/index.html",
-    "default_title": "JOSM Strava Heatmap"
+  ],
+  "content_scripts": [{
+    "matches": ["*://*.strava.com/heatmap*"],
+    "js": [
+      "browser-polyfill.min.js",
+      "content.js"
+    ],
+    "css": [
+      "content.css"
+    ]
+  }],
+  "background": {
+    "scripts": [
+      "browser-polyfill.min.js",
+      "background.js"
+    ]
   }
 }
