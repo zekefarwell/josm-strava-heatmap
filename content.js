@@ -1,7 +1,5 @@
 
 
-console.log("JOSM IMAGERY URL RUNNING")
-
 document.body.insertAdjacentHTML('afterbegin', `
     <div id="josm-modal" class="josm-modal">
         <div id="josm-modal-dialog" class="josm-modal-dialog">
@@ -37,7 +35,6 @@ button.addEventListener("click", copyHeatmapUrl);
 async function copyHeatmapUrl(e) 
 {
     let heatmap_url = await browser.runtime.sendMessage({"name": "getHeatmapUrl"});
-    console.log(heatmap_url);
     navigator.clipboard.writeText(heatmap_url)
     document.querySelector('#josm-imagery-url').textContent = heatmap_url
     document.querySelector('#josm-modal').classList.add('active');
@@ -48,5 +45,4 @@ document.querySelector('#josm-modal').addEventListener("click", e => {
     e.target.classList.remove('active')
 })
 
-console.log('JOSM IMAGERY URL FINISHED');
 
