@@ -3,7 +3,7 @@
 document.body.insertAdjacentHTML('afterbegin', `
     <div id="josm-modal" class="josm-modal">
         <div id="josm-modal-dialog" class="josm-modal-dialog">
-            <h5>JOSM imagery URL has been copied to the clipboard</h5>
+            <h5 id="josm-modal-message"></h5>
             <code>
                 <pre id="josm-imagery-url"></pre>
             </code>
@@ -34,8 +34,23 @@ button.addEventListener("click", copyHeatmapUrl);
 
 async function copyHeatmapUrl(e) 
 {
-    let heatmap_url = await browser.runtime.sendMessage({"name": "getHeatmapUrl"});
-    navigator.clipboard.writeText(heatmap_url)
+    let response, message, heatmap_url;
+    try {
+        response = await browser.runtime.sendMessage({"name": "getHeatmapUrl"});
+    } catch(err) {
+        console.log(err)
+        message = "Unknown error - check console"
+        heatmap_url = "couldn't build url"
+    }
+    if (response.error) {
+        message = "Error: missing cookies"
+        heatmap_url = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
+    } else {
+        heatmap_url = response.heatmap_url
+        navigator.clipboard.writeText(heatmap_url)
+        message = "JOSM imagery URL has been copied to the clipboard"
+    }
+    document.querySelector('#josm-modal-message').textContent = message
     document.querySelector('#josm-imagery-url').textContent = heatmap_url
     document.querySelector('#josm-modal').classList.add('active');
 }
