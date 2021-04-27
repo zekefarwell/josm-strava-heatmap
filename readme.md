@@ -32,6 +32,3 @@ OSM Wiki: [Using the Strava Heatmap][3]
 
 With a slight modification this url can be used as a custom background image in iD as well.
 For use in iD, remove `tms[3,20]:` from the beginning so it starts with `https://heatmap-external- ...`.
-
-> __* Note:__ This extension doesn't work in Firefox container tabs.  Getting the cookies from the isolated containers requires
-> more sophisticated logic that is not currently implemented.  Log in to Strava in a normal tab for this extension to work.
