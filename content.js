@@ -49,21 +49,30 @@ async function insertButton()
 async function copyHeatmapUrl(e) 
 {
     let response, message, heatmap_url;
+
+    let map_color = document.querySelector(".map-color.active").getAttribute("data-color");
+    let map_type = document.querySelector(".map-type.active").getAttribute("data-type");
+
     try {
-        response = await browser.runtime.sendMessage({"name": "getHeatmapUrl"});
+        response = await browser.runtime.sendMessage({
+            "name": "getHeatmapUrl",
+            "map_color": map_color ?? "hot",
+            "map_type": map_type ?? "all"
+        });
+        if (response.error) {
+            message = "Error: missing cookies"
+            heatmap_url = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
+        } else {
+            heatmap_url = response.heatmap_url
+            navigator.clipboard.writeText(heatmap_url)
+            message = "JOSM imagery URL has been copied to the clipboard"
+        }
     } catch(err) {
         console.log(err)
         message = "Unknown error - check console"
         heatmap_url = "couldn't build url"
     }
-    if (response.error) {
-        message = "Error: missing cookies"
-        heatmap_url = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
-    } else {
-        heatmap_url = response.heatmap_url
-        navigator.clipboard.writeText(heatmap_url)
-        message = "JOSM imagery URL has been copied to the clipboard"
-    }
+    
     document.querySelector('#josm-modal-message').textContent = message
     document.querySelector('#josm-imagery-url').textContent = heatmap_url
     document.querySelector('#josm-modal').classList.add('active');
