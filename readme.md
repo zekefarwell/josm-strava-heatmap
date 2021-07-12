@@ -15,20 +15,36 @@ OSM Wiki: [Using the Strava Heatmap][3]
 [2]: https://josm.openstreetmap.de/
 [3]: https://wiki.openstreetmap.org/wiki/Strava
 
+## Installation
+
+Available as a [Firefox Add-On][4] or [Chrome extension][7].  The Chrome extension
+should also work in Microsoft Edge and other Chromium based browsers.
+
 ## Instructions
 
-1. Install the [Firefox Add-On][4] or [Chrome extension][7]
-2. Visit [strava.com/heatmap][5] and log in – sign up for a free account if you don't have one *
+1. Visit [strava.com/heatmap][5] and log in – sign up for a free account if you don't have one
+2. *Optional* - Select the heatmap color and activity type you want to use
 3. Click the button pictured below to copy the TMS imagery url prepopulated with the required
    `Key-Pair-Id`, `Policy`, and `Signature` parameters
-4. Add a new [JOSM imagery layer][6] called Strava Heatmap with the copied url (or update existing if you already have one)
+4. Paste the copied url into a custom imagery layer in JOSM or iD (remove the `tms:` prefix
+   for iD - see editor specific sections below)
 
 ![Screenshot of Strava Heatmap with button added](screenshot.png)
 
+### Using the imagery in JOSM
+
+Add a new TMS layer in the [JOSM imagery preferences][6].  Name it Strava Heatmap and paste in the
+copied url.  If you are updating an expired Strava Heatmap layer you can just double-click it to
+replace url in the list view.
+
+### Using the imagery in iD
+
+Open the Backgrounds panel and select "Custom" at the bottom.  Paste the copied url into the
+Custom Background Settings window that opens.  Remove the `tms:` prefix at the beginning of
+the url so it just starts with `https://heatmap-external- ...`.  This prefix is necessary for
+JOSM but must be removed for iD.
+
 [4]: https://addons.mozilla.org/en-US/firefox/addon/josm-strava-heatmap/
 [5]: https://www.strava.com/heatmap
-[6]: https://josm.openstreetmap.de/wiki/Help/Preferences/Imagery#SelectedEntries
+[6]: https://josm.openstreetmap.de/wiki/Help/Preferences/Imagery
 [7]: https://chrome.google.com/webstore/detail/josm-strava-heatmap/hicmfobjcbinceoeegookkgllpdgkcdc
-
-With a slight modification this url can be used as a custom background image in iD as well.
-For use in iD, remove `tms[3,20]:` from the beginning so it starts with `https://heatmap-external- ...`.
