@@ -1,5 +1,5 @@
 
-const url_prefix = "tms[3,20]:https://heatmap-external-{switch:a,b,c}.strava.com/tiles-auth/";
+const url_prefix = "tms:https://heatmap-external-{switch:a,b,c}.strava.com/tiles-auth/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
 async function getHeatmapUrl(map_color, map_type, tab_url, store_id) 
