@@ -1,8 +1,8 @@
 
-const url_prefix = "tms:https://heatmap-external-{switch:a,b,c}.strava.com/tiles-auth/";
+const url_prefix = "https://heatmap-external-{switch:a,b,c}.strava.com/tiles-auth/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
-async function getHeatmapUrl(map_color, map_type, tab_url, store_id) 
+async function getHeatmapUrl(map_color, map_type, tab_url, store_id)
 {
     let pair = await getCookieValue('CloudFront-Key-Pair-Id', tab_url, store_id);
     let policy = await getCookieValue('CloudFront-Policy', tab_url, store_id);
@@ -28,7 +28,7 @@ async function getCookieValue(name, url, store_id)
 browser.runtime.onMessage.addListener(async function (message, sender, sendResponse) {
     return getHeatmapUrl(
         message.map_color,
-        message.map_type, 
+        message.map_type,
         sender.tab.url,
         sender.tab.cookieStoreId
     )

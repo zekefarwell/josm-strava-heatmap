@@ -11,6 +11,9 @@ function insertModal()
                 <code>
                     <pre id="josm-imagery-url"></pre>
                 </code>
+                <p>
+                    <a id="josm-click-to-load">Click to open imagery in JOSM</a>
+                </p>
             </div>
         </div>
     `);
@@ -46,9 +49,13 @@ async function insertButton()
     button.addEventListener("click", copyHeatmapUrl);
 }
 
-async function copyHeatmapUrl(e) 
+async function copyHeatmapUrl(e)
 {
-    let response, message, heatmap_url;
+    let response,
+      message,
+      heatmap_url_manual_copy,
+      heatmap_url_click,
+      base_heatmap_url;
 
     let map_color = document.querySelector(".map-color.active").getAttribute("data-color");
     let map_type = document.querySelector(".map-type.active").getAttribute("data-type");
@@ -61,19 +68,24 @@ async function copyHeatmapUrl(e)
         });
         if (response.error) {
             message = "Error: missing cookies"
-            heatmap_url = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
+            heatmap_url_manual_copy = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
         } else {
-            heatmap_url = response.heatmap_url
-            navigator.clipboard.writeText(heatmap_url)
+            base_heatmap_url = response.heatmap_url;
+            heatmap_url_manual_copy = "tms:" + base_heatmap_url;
+            heatmap_url_click =
+              "http://127.0.0.1:8111/imagery?title=Strava&type=tms&max_zoom=15&url=" +
+              base_heatmap_url;
+            navigator.clipboard.writeText(heatmap_url_manual_copy);
             message = "JOSM imagery URL has been copied to the clipboard"
         }
     } catch(err) {
         console.log(err)
         message = "Unknown error - check console"
-        heatmap_url = "couldn't build url"
+        heatmap_url_manual_copy = "couldn't build url"
     }
-    
+
     document.querySelector('#josm-modal-message').textContent = message
-    document.querySelector('#josm-imagery-url').textContent = heatmap_url
+    document.querySelector('#josm-imagery-url').textContent = heatmap_url_manual_copy
+    document.querySelector("#josm-click-to-load").href = heatmap_url_click
     document.querySelector('#josm-modal').classList.add('active');
 }
