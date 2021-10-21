@@ -7,13 +7,25 @@ function insertModal()
     document.body.insertAdjacentHTML('afterbegin', `
         <div id="josm-modal" class="josm-modal">
             <div id="josm-modal-dialog" class="josm-modal-dialog">
-                <h5 id="josm-modal-message"></h5>
-                <code>
-                    <pre id="josm-imagery-url"></pre>
-                </code>
-                <p>
-                    <a id="josm-click-to-load">Click to open imagery in JOSM</a>
-                </p>
+                <div class="modal-header">
+                    <h4 id="josm-modal-message"></h5>
+                </div>
+                <menu id="imagery-load-menu">
+                    <li>
+                        <a class="btn btn-xs btn-default" id="josm-click-to-load">Click to open imagery in JOSM</a>
+                    </li>
+                    <li>Or, manually copy the URL and paste into JOSM imagery preferences:
+                        <code>
+                            <button class="copy-button btn btn-xs" onclick="" aria-label="Copy to clipboard" title="Copy to clipboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                                </svg>
+                            </button>
+                            <pre id="josm-imagery-url"></pre>
+                        </code>
+                    </li>
+                </menu>
             </div>
         </div>
     `);
@@ -76,7 +88,7 @@ async function copyHeatmapUrl(e)
               "http://127.0.0.1:8111/imagery?title=Strava&type=tms&max_zoom=15&url=" +
               base_heatmap_url;
             navigator.clipboard.writeText(heatmap_url_manual_copy);
-            message = "JOSM imagery URL has been copied to the clipboard"
+            message = "Open heatmap in editor"
         }
     } catch(err) {
         console.log(err)

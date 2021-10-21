@@ -34,12 +34,28 @@ button.josm-imagery {
 .josm-modal-dialog code {
     background-color: lightgray;
     border-radius: 3px;
-    padding: 10px;
+    padding: 10px 50px 10px 10px;
     display: block;
+    position: relative;
 }
 .josm-modal-dialog pre {
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-all;
+}
+.josm-modal-dialog menu {
+    padding-inline-start: 0px;
+}
+.josm-modal-dialog menu li {
+    list-style: none;
+}
+.josm-modal-dialog .copy-button {
+    position: absolute;
+    /* padding: 6px; */
+    right: 8px;
+    top: 8px;
+    /* vertical-align: middle;
+    text-align: center; */
+    background-color: transparent;
 }
