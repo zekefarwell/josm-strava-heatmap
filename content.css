@@ -49,13 +49,14 @@ button.josm-imagery {
 }
 .josm-modal-dialog menu li {
     list-style: none;
+    margin-bottom: 7px;
+}
+.josm-modal-dialog .btn {
+    font-size: 16px;
 }
 .josm-modal-dialog .copy-button {
     position: absolute;
-    /* padding: 6px; */
     right: 8px;
     top: 8px;
-    /* vertical-align: middle;
-    text-align: center; */
     background-color: transparent;
 }
