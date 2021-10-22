@@ -16,7 +16,7 @@ function insertModal()
                     </li>
                     <li>Or, manually copy the URL and paste into JOSM imagery preferences:
                         <code>
-                            <button class="copy-button btn btn-xs" onclick="" aria-label="Copy to clipboard" title="Copy to clipboard">
+                            <button id="josm-click-to-copy" class="copy-button btn btn-xs" aria-label="Copy to clipboard" title="Copy to clipboard">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                                     <path d="M0 0h24v24H0V0z" fill="none" />
                                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
@@ -58,10 +58,10 @@ async function insertButton()
         </svg>
     `
     ctrl_top_right.prepend(button);
-    button.addEventListener("click", copyHeatmapUrl);
+    button.addEventListener("click", openJosmDialog);
 }
 
-async function copyHeatmapUrl(e)
+async function openJosmDialog(e)
 {
     let response,
       message,
@@ -87,7 +87,6 @@ async function copyHeatmapUrl(e)
             heatmap_url_click =
               "http://127.0.0.1:8111/imagery?title=Strava&type=tms&max_zoom=15&url=" +
               base_heatmap_url;
-            navigator.clipboard.writeText(heatmap_url_manual_copy);
             message = "Open heatmap in editor"
         }
     } catch(err) {
@@ -100,4 +99,10 @@ async function copyHeatmapUrl(e)
     document.querySelector('#josm-imagery-url').textContent = heatmap_url_manual_copy
     document.querySelector("#josm-click-to-load").href = heatmap_url_click
     document.querySelector('#josm-modal').classList.add('active');
+    document.querySelector("#josm-click-to-copy").addEventListener("click", copyUrlToClipboard);
+}
+
+function copyUrlToClipboard() {
+    let heatmapUrlManualCopy = document.querySelector("#josm-imagery-url").innerHTML;
+    navigator.clipboard.writeText(heatmapUrlManualCopy);
 }
