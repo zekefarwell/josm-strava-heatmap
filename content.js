@@ -103,6 +103,6 @@ async function openJosmDialog(e)
 }
 
 function copyUrlToClipboard() {
-    let heatmapUrlManualCopy = document.querySelector("#josm-imagery-url").innerHTML;
-    navigator.clipboard.writeText(heatmapUrlManualCopy);
+    let heatmap_url_manual_copy = document.querySelector("#josm-imagery-url").innerHTML;
+    navigator.clipboard.writeText(heatmap_url_manual_copy);
 }
