@@ -7,10 +7,27 @@ function insertModal()
     document.body.insertAdjacentHTML('afterbegin', `
         <div id="josm-modal" class="josm-modal">
             <div id="josm-modal-dialog" class="josm-modal-dialog">
-                <h5 id="josm-modal-message"></h5>
-                <code>
-                    <pre id="josm-imagery-url"></pre>
-                </code>
+                <div class="modal-header">
+                    <h4 id="josm-modal-message"></h5>
+                </div>
+                <div class="modal-body">
+                    <menu id="imagery-load-menu">
+                        <li>
+                            <a class="btn btn-xs btn-default" id="josm-click-to-load">Open imagery in JOSM</a>
+                        </li>
+                        <li>Or, copy the URL and paste into JOSM imagery preferences:
+                            <code>
+                                <button id="josm-click-to-copy" class="copy-button btn btn-xs" aria-label="Copy to clipboard" title="Copy to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                                    </svg>
+                                </button>
+                                <pre id="josm-imagery-url"></pre>
+                            </code>
+                        </li>
+                    </menu>
+                </div>
             </div>
         </div>
     `);
@@ -43,12 +60,16 @@ async function insertButton()
         </svg>
     `
     ctrl_top_right.prepend(button);
-    button.addEventListener("click", copyHeatmapUrl);
+    button.addEventListener("click", openJosmDialog);
 }
 
-async function copyHeatmapUrl(e) 
+async function openJosmDialog(e)
 {
-    let response, message, heatmap_url;
+    let response,
+      message,
+      heatmap_url_manual_copy,
+      heatmap_url_click,
+      base_heatmap_url;
 
     let map_color = document.querySelector(".map-color.active").getAttribute("data-color");
     let map_type = document.querySelector(".map-type.active").getAttribute("data-type");
@@ -61,19 +82,29 @@ async function copyHeatmapUrl(e)
         });
         if (response.error) {
             message = "Error: missing cookies"
-            heatmap_url = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
+            heatmap_url_manual_copy = "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
         } else {
-            heatmap_url = response.heatmap_url
-            navigator.clipboard.writeText(heatmap_url)
-            message = "JOSM imagery URL has been copied to the clipboard"
+            base_heatmap_url = response.heatmap_url;
+            heatmap_url_manual_copy = "tms:" + base_heatmap_url;
+            heatmap_url_click =
+              "http://127.0.0.1:8111/imagery?title=Strava&type=tms&max_zoom=15&url=" +
+              base_heatmap_url;
+            message = "Open heatmap in editor"
         }
     } catch(err) {
         console.log(err)
         message = "Unknown error - check console"
-        heatmap_url = "couldn't build url"
+        heatmap_url_manual_copy = "couldn't build url"
     }
-    
+
     document.querySelector('#josm-modal-message').textContent = message
-    document.querySelector('#josm-imagery-url').textContent = heatmap_url
+    document.querySelector('#josm-imagery-url').textContent = heatmap_url_manual_copy
+    document.querySelector("#josm-click-to-load").href = heatmap_url_click
     document.querySelector('#josm-modal').classList.add('active');
+    document.querySelector("#josm-click-to-copy").addEventListener("click", copyUrlToClipboard);
+}
+
+function copyUrlToClipboard() {
+    let heatmap_url_manual_copy = document.querySelector("#josm-imagery-url").innerHTML;
+    navigator.clipboard.writeText(heatmap_url_manual_copy);
 }

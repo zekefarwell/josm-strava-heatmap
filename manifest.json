@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "JOSM Strava Heatmap",
   "description": "A browser extension that simplifies getting the TMS imagery url for using the Strava Heatmap in JOSM",
-  "version": "3",
+  "version": "4",
   "icons": {
     "48": "icons/icon.png"
   },
