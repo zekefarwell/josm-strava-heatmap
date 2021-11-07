@@ -56,3 +56,6 @@ button.jsh-modal-toggle {
 .jsh-modal-dialog > .modal-header, .jsh-modal-dialog > .modal-body {
     background-color: transparent;
 }
+.jsh-modal-dialog .btn.active {
+    background-color: #f0f0f5;
+}

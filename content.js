@@ -93,6 +93,7 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
     let title = `Strava Heatmap (${map_color}/${map_type})`
     let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${heatmap_url}`;
     let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id&background=custom:${heatmap_url.replace(/&/g, '%26')}`;
+    let heatmap_url_tms = `tms:${heatmap_url}`;
 
     document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
     document.querySelector('#jsh-modal-body').innerHTML = `
@@ -105,6 +106,16 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
             </a>
         </p>
         <p>Or, copy the URL to manually add a custom imagery layer in your editor of choice: </p>
+        <div class="btn-group btn-group-xs" data-toggle="buttons">
+            <label id="jsh-tms-prefix-true" class="btn btn-default active" data-tms-prefix="true">
+                <input name="tms_prefix" type="radio" value="true">
+                tms prefix
+            </label>
+            <label id="jsh-tms-prefix-false" class="btn btn-default" data-tms-prefix="false">
+                <input name="tms_prefix" type="radio" value="false">
+                no prefix
+            </label>
+        </div>
         <code>
             <button id="jsh-click-to-copy" class="copy-button btn btn-xs" aria-label="Copy to clipboard" title="Copy to clipboard">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -112,10 +123,16 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
                 </svg>
             </button>
-            <pre id="jsh-imagery-url">${heatmap_url}</pre>
+            <pre id="jsh-imagery-url">${heatmap_url_tms}</pre>
         </code>
     `;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
+    document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
+        document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
+    });
+    document.querySelector("#jsh-tms-prefix-false").addEventListener("click", function () {
+        document.querySelector("#jsh-imagery-url").textContent = heatmap_url;
+    });
 }
 
 /**
