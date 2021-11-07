@@ -44,9 +44,6 @@ button.jsh-modal-toggle {
     word-wrap: break-word;
     word-break: break-all;
 }
-.jsh-modal-dialog .btn {
-    font-size: 16px;
-}
 .jsh-modal-dialog .copy-button {
     position: absolute;
     right: 8px;

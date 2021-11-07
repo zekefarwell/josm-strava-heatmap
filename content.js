@@ -98,15 +98,15 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
     document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
     document.querySelector('#jsh-modal-body').innerHTML = `
         <p>
-            <a href="${open_in_josm_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-default">
+            <a href="${open_in_josm_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in JOSM
             </a>
-            <a href="${open_in_id_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-default">
+            <a href="${open_in_id_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in iD
             </a>
         </p>
         <p>Or, copy the URL to manually add a custom imagery layer in your editor of choice: </p>
-        <div class="btn-group btn-group-xs" data-toggle="buttons">
+        <div class="btn-group btn-group-sm" data-toggle="buttons">
             <label id="jsh-tms-prefix-true" class="btn btn-default active" data-tms-prefix="true">
                 <input name="tms_prefix" type="radio" value="true">
                 tms prefix
