@@ -1,4 +1,4 @@
-button.josm-imagery {
+button.jsh-modal-toggle {
     border: none;
     border-radius: 3px;
     width: 40px;
@@ -12,10 +12,10 @@ button.josm-imagery {
     pointer-events: auto;
 }
 
-.josm-modal {
+.jsh-modal {
     display: none;
 }
-.josm-modal.active {
+.jsh-modal.active {
     display: block;
     position: fixed;
     z-index: 200;
@@ -23,40 +23,36 @@ button.josm-imagery {
     height: 100%;
     background-color: rgba(0,0,0,0.75);
 }
-.josm-modal-dialog {
+.jsh-modal-dialog {
     background: white;
     border-radius: 4px;
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     max-width: 600px;
     margin: 200px auto;
-    padding: 10px
 }
-.josm-modal-dialog code {
+.jsh-modal-dialog code {
     background-color: lightgray;
     border-radius: 3px;
     padding: 10px 50px 10px 10px;
     display: block;
     position: relative;
+    margin-bottom: 7px;
 }
-.josm-modal-dialog pre {
+.jsh-modal-dialog pre {
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-all;
 }
-.josm-modal-dialog menu {
-    padding-inline-start: 0px;
-}
-.josm-modal-dialog menu li {
-    list-style: none;
-    margin-bottom: 7px;
-}
-.josm-modal-dialog .btn {
+.jsh-modal-dialog .btn {
     font-size: 16px;
 }
-.josm-modal-dialog .copy-button {
+.jsh-modal-dialog .copy-button {
     position: absolute;
     right: 8px;
     top: 8px;
+    background-color: transparent;
+}
+.jsh-modal-dialog > .modal-header, .jsh-modal-dialog > .modal-body {
     background-color: transparent;
 }
