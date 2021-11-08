@@ -1,7 +1,7 @@
 # JOSM Strava Heatmap
 
-This browser extension adds a button to the [Strava Global Heatmap][1] that
-copies the TMS imagery url for use in the [Java OpenStreetMap Editor][2] (JOSM).
+This browser extension makes it easy to use the [Strava Global Heatmap][1] in
+[JOSM][2], [iD][8], and other mapping applications that supports TMS imagery.
 
 Accessing this imagery externally requires a set of key parameters that you obtain
 by signing into the Strava website, copying the values from several cookies, and
@@ -12,8 +12,9 @@ url for you which makes this weekly process a bit less annoying.
 OSM Wiki: [Using the Strava Heatmap][3]
 
 [1]: https://www.strava.com/heatmap
-[2]: https://josm.openstreetmap.de/
+[2]: https://josm.openstreetmap.de/ "Java OpenStreetMap Editor"
 [3]: https://wiki.openstreetmap.org/wiki/Strava
+[8]: https://www.openstreetmap.org
 
 ## Installation
 
@@ -30,6 +31,17 @@ should also work in Microsoft Edge and other Chromium based browsers.
    for iD - see editor specific sections below)
 
 ![Screenshot of Strava Heatmap with button added](screenshot.png)
+
+4. Click the appropriate button to open the heatmap in either JOSM or iD.  For [JOSM, Remote control][9] must be enabled.
+5. *Optional* - If you'd rather 
+6. Paste the copied url into a custom imagery layer in JOSM or iD (remove the `tms:` prefix
+   for iD - see editor specific sections below)
+
+![Screenshot of modal dialog with heatmap url](screenshot2.png)
+
+[9]: https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl
+
+
 
 ### Using the imagery in JOSM
 
