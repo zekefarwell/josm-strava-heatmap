@@ -98,10 +98,10 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
     document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
     document.querySelector('#jsh-modal-body').innerHTML = `
         <p>
-            <a href="${open_in_josm_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default">
+            <a id="jsh-open-in-josm" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in JOSM
             </a>
-            <a href="${open_in_id_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default">
+            <a id="jsh-open-in-id" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in iD
             </a>
         </p>
@@ -123,9 +123,12 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type)
                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
                 </svg>
             </button>
-            <pre id="jsh-imagery-url">${heatmap_url_tms}</pre>
+            <pre id="jsh-imagery-url"></pre>
         </code>
     `;
+    document.querySelector("#jsh-open-in-josm").setAttribute("href", open_in_josm_url);
+    document.querySelector("#jsh-open-in-id").setAttribute("href", open_in_id_url);
+    document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
     document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
         document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
