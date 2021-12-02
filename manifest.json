@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "JOSM Strava Heatmap",
   "description": "A browser extension that simplifies getting the TMS imagery url for using the Strava Heatmap in JOSM",
   "version": "4",
@@ -8,24 +8,27 @@
   },
   "permissions": [
     "cookies",
-    "*://*.strava.com/*",
     "clipboardWrite"
   ],
-  "content_scripts": [{
-    "matches": ["*://*.strava.com/heatmap*"],
-    "js": [
-      "browser-polyfill.min.js",
-      "content.js"
-    ],
-    "css": [
-      "content.css"
-    ]
-  }],
+  "host_permissions": [
+    "*://*.strava.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.strava.com/heatmap*"
+      ],
+      "js": [
+        "browser-polyfill.min.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ],
   "background": {
-    "scripts": [
-      "browser-polyfill.min.js",
-      "background.js"
-    ]
+    "service_worker": "background.js"
   },
   "homepage_url": "https://github.com/zekefarwell/josm-strava-heatmap"
 }
