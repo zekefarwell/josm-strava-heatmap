@@ -90,9 +90,10 @@ async function openModalDialog(e)
  */
 function setModalHtmlSuccess(heatmap_url, map_color, map_type)
 {
-    let title = `Strava Heatmap (${map_color}/${map_type})`
-    let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${heatmap_url}`;
-    let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id&background=custom:${heatmap_url.replace(/&/g, '%26')}`;
+    let title = `Strava Heatmap (${map_color}/${map_type})`;
+    let encoded_heatmap_url = encodeURIComponent(heatmap_url);
+    let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${encoded_heatmap_url}`;
+    let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
     let heatmap_url_tms = `tms:${heatmap_url}`;
 
     document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
