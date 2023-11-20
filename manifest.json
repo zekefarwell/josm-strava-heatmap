@@ -19,7 +19,6 @@
         "*://*.strava.com/heatmap*"
       ],
       "js": [
-        "browser-polyfill.min.js",
         "content.js"
       ],
       "css": [
@@ -28,7 +27,10 @@
     }
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": [
+      "background.js"
+    ]
   },
   "homepage_url": "https://github.com/zekefarwell/josm-strava-heatmap"
 }
