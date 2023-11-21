@@ -1,3 +1,6 @@
+if (typeof globalThis.browser === "undefined" && typeof chrome !== "undefined") {
+  globalThis.browser = chrome;
+}
 
 const url_prefix = "https://heatmap-external-{switch:a,b,c}.strava.com/tiles-auth/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
