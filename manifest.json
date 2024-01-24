@@ -12,7 +12,10 @@
     "clipboardWrite"
   ],
   "content_scripts": [{
-    "matches": ["*://*.strava.com/heatmap*"],
+    "matches": [
+      "*://*.strava.com/heatmap*",
+      "*://*.strava.com/maps*"
+    ],
     "js": [
       "browser-polyfill.min.js",
       "content.js"

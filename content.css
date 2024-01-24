@@ -3,7 +3,7 @@ button.jsh-modal-toggle {
     border-radius: 3px;
     width: 40px;
     height: 40px;
-    margin: 10px;
+    margin: 80px 10px 10px;
     padding: 0;
     background-color: white;
     /* background-image: url('icons/icon.svg'); */
@@ -29,6 +29,7 @@ button.jsh-modal-toggle {
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
     max-width: 600px;
     margin: 200px auto;
+    padding: 20px;
 }
 .jsh-modal-dialog code {
     background-color: lightgray;
@@ -50,9 +51,22 @@ button.jsh-modal-toggle {
     top: 8px;
     background-color: transparent;
 }
-.jsh-modal-dialog > .modal-header, .jsh-modal-dialog > .modal-body {
-    background-color: transparent;
+.jsh-modal-dialog > .modal-header {
+    margin-top: 0px;
 }
+
+.jsh-modal-dialog a.btn {
+    margin-right: 4px;
+    padding: 10px 20px;
+    line-height: 2;
+    border: 1px solid #E7E7E7;
+    border-radius: 5px;
+}
+.jsh-modal-dialog a.btn:hover {
+    background-color: #F0F0F0;
+    text-decoration: none;
+}
+
 .jsh-modal-dialog .btn.active {
     background-color: #f0f0f5;
 }

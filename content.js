@@ -58,8 +58,8 @@ async function insertButtonHtml()
  */
 async function openModalDialog(e)
 {
-    let map_color = document.querySelector(".map-color.active").getAttribute("data-color");
-    let map_type = document.querySelector(".map-type.active").getAttribute("data-type");
+    let map_color = "hot";
+    let map_type = "all";
 
     // Attempt to build the heatmap url from key pair, policy, and signature cookies
     try {
