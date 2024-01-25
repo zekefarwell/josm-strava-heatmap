@@ -61,6 +61,11 @@ button.jsh-modal-toggle {
     line-height: 2;
     border: 1px solid #E7E7E7;
     border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+}
+.jsh-modal-dialog a.btn:visited {
+    color: #000;
 }
 .jsh-modal-dialog a.btn:hover {
     background-color: #F0F0F0;
