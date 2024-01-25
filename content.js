@@ -58,15 +58,10 @@ async function insertButtonHtml()
  */
 async function openModalDialog(e)
 {
-    let map_color = document.querySelector(".map-color.active").getAttribute("data-color");
-    let map_type = document.querySelector(".map-type.active").getAttribute("data-type");
-
     // Attempt to build the heatmap url from key pair, policy, and signature cookies
     try {
         let response = await browser.runtime.sendMessage({
             "name": "getHeatmapUrl",
-            "map_color": map_color ?? "hot",
-            "map_type": map_type ?? "all"
         });
         if (response.error) {
             setModalHtmlError(
@@ -74,7 +69,11 @@ async function openModalDialog(e)
                 "One or more cookies not found - 'CloudFront-Key-Pair-Id', 'CloudFront-Policy', 'CloudFront-Signature'"
             );
         } else {
-            setModalHtmlSuccess(response.heatmap_url, map_color, map_type);
+            setModalHtmlSuccess(
+                response.heatmap_url,
+                response.map_color,
+                response.map_type,
+            );
         }
     } catch(err) {
         console.log(err);
