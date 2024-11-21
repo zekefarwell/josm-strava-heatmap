@@ -42,7 +42,7 @@ async function getHeatmapUrl(tab_url, store_id)
     let heatmap_url = url_prefix + map_type + '/' + map_color + url_suffix + query_string
 
     let error = (pair && policy && signature) ? false : true
-    return { error, heatmap_url, map_color, map_type }
+    return { error, heatmap_url, map_color, sport }
 }
 
 async function getCookieValue(name, url, store_id)
