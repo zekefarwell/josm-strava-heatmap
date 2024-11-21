@@ -8,22 +8,14 @@ async function getHeatmapUrl(tab_url, store_id)
     let strava_url = new URL(tab_url);
 
     // Attempt to set map type based on sport url parameter.
-    // Walk and hike are the same as run. Default to 'all'.
-    let sport = strava_url.searchParams.get('sport').toLowerCase();
-    if  (sport == 'walk' || sport == 'hike') {
-        sport = 'run';
-    }
+    let sport = strava_url.searchParams.get('sport');
     let map_type;
-    switch (sport) {
-        case 'all':
-        case 'ride':
-        case 'run':
-        case 'water':
-        case 'winter':
-            map_type = sport;
-            break;
-        default:
-            map_type = 'all';
+    if (sport === 'All') {
+        map_type = 'all';
+    } else if (sport.endsWith('Like')) {
+        map_type = sport.replace('Like', '').toLowerCase();
+    } else {
+        map_type = 'sport_' + sport
     }
 
     // Attempt to set map color based on gColor url parameter. Default to  'hot'.
@@ -50,7 +42,7 @@ async function getHeatmapUrl(tab_url, store_id)
     let heatmap_url = url_prefix + map_type + '/' + map_color + url_suffix + query_string
 
     let error = (pair && policy && signature) ? false : true
-    return { error, heatmap_url, map_color, map_type }
+    return { error, heatmap_url, map_color, sport }
 }
 
 async function getCookieValue(name, url, store_id)

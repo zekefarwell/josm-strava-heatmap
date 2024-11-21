@@ -72,7 +72,7 @@ async function openModalDialog(e)
             setModalHtmlSuccess(
                 response.heatmap_url,
                 response.map_color,
-                response.map_type,
+                response.sport,
             );
         }
     } catch(err) {
@@ -87,9 +87,9 @@ async function openModalDialog(e)
 /**
  * Set the HTML content of the modal after successfully building the heatmap url
  */
-function setModalHtmlSuccess(heatmap_url, map_color, map_type)
+function setModalHtmlSuccess(heatmap_url, map_color, sport)
 {
-    let title = `Strava Heatmap (${map_color}/${map_type})`;
+    let title = `Strava Heatmap (${map_color}/${sport})`;
     let encoded_heatmap_url = encodeURIComponent(heatmap_url);
     let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${encoded_heatmap_url}`;
     let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
