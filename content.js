@@ -1,4 +1,3 @@
-
 insertModalHtml();
 insertButtonHtml();
 
@@ -73,6 +72,7 @@ async function openModalDialog(e)
                 response.heatmap_url,
                 response.map_color,
                 response.map_type,
+                response.cookies,
             );
         }
     } catch(err) {
@@ -87,11 +87,15 @@ async function openModalDialog(e)
 /**
  * Set the HTML content of the modal after successfully building the heatmap url
  */
-function setModalHtmlSuccess(heatmap_url, map_color, map_type)
+function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
 {
     let title = `Strava Heatmap (${map_color}/${map_type})`;
     let encoded_heatmap_url = encodeURIComponent(heatmap_url);
-    let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${encoded_heatmap_url}`;
+    let cookies_string = Object.entries(cookies)
+        .filter(([_, value]) => value) // Only include cookies that have values
+        .map(([key, value]) => `${key}=${value}`)
+        .join(';');
+    let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&cookies=${cookies_string}&url=${encoded_heatmap_url}`;
     let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
     let heatmap_url_tms = `tms:${heatmap_url}`;
 
