@@ -1,4 +1,3 @@
-
 insertModalHtml();
 insertButtonHtml();
 
@@ -73,6 +72,7 @@ async function openModalDialog(e)
                 response.heatmap_url,
                 response.map_color,
                 response.map_type,
+                response.cookies,
             );
         }
     } catch(err) {
@@ -85,13 +85,32 @@ async function openModalDialog(e)
 }
 
 /**
+ * Builds a JOSM URL for opening the heatmap as a TMS layer
+ * @param {string} title - The title of the layer
+ * @param {Map<string, string>} cookies - The cookies needed for authentication
+ * @param {string} heatmap_url - The heatmap URL
+ * @returns {string} The complete JOSM URL
+ */
+function buildJosmUrl(title, cookies, heatmap_url)
+{
+    const josm_url = new URL('http://127.0.0.1:8111/imagery');
+    const cookies_value = cookies.entries().map(([key, value]) => `${key}=${value}`).toArray().join(';');
+    josm_url.searchParams.set('title', title);
+    josm_url.searchParams.set('type', 'tms');
+    josm_url.searchParams.set('max_zoom', '15'); // the max zoom that Strava heatmaps support
+    josm_url.searchParams.set('cookies', cookies_value);
+    josm_url.searchParams.set('url', heatmap_url);
+    return josm_url.toString();
+}
+
+/**
  * Set the HTML content of the modal after successfully building the heatmap url
  */
-function setModalHtmlSuccess(heatmap_url, map_color, map_type)
+function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
 {
     let title = `Strava Heatmap (${map_color}/${map_type})`;
+    let open_in_josm_url = buildJosmUrl(title, cookies, heatmap_url);
     let encoded_heatmap_url = encodeURIComponent(heatmap_url);
-    let open_in_josm_url = `http://127.0.0.1:8111/imagery?title=${title}&type=tms&max_zoom=15&url=${encoded_heatmap_url}`;
     let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
     let heatmap_url_tms = `tms:${heatmap_url}`;
 
