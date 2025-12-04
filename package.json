@@ -3,16 +3,15 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js",
-    "package:chrome": "node scripts/package-chrome.js",
-    "package:firefox": "node scripts/package-firefox.js",
+    "build": "node build.js",
+    "package:chrome": "npm run build && mkdir -p artifacts && cd dist && zip -r ../artifacts/josm-strava-heatmap-chrome.zip .",
+    "package:firefox": "npm run build && web-ext build --source-dir=dist --artifacts-dir=artifacts --overwrite-dest",
     "package:all": "npm run package:chrome && npm run package:firefox"
   },
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
-    "archiver": "^7.0.1",
     "esbuild": "^0.27.1",
     "esbuild-plugin-copy": "^2.1.1",
     "web-ext": "^9.2.0"

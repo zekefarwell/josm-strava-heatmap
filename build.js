@@ -3,7 +3,7 @@ const copy = require('esbuild-plugin-copy').default;
 const path = require('path');
 const fs = require('fs/promises');
 
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = __dirname;
 const outDir = path.join(rootDir, 'dist');
 
 async function run() {
