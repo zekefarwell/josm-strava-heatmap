@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
+    "dev": "node build.js --dev",
     "package:chrome": "npm run build",
     "package:firefox": "npm run build",
     "package:all": "npm run build"

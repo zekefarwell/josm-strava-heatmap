@@ -8,8 +8,10 @@ const fs = require('fs/promises');
 const rootDir = __dirname;
 const outDir = path.join(rootDir, 'dist');
 const artifactsDir = path.join(rootDir, 'artifacts');
+const isDev = process.argv.includes('--dev');
 
 async function run() {
+  console.log(`Building in ${isDev ? 'development' : 'production'} mode...`);
   await fs.rm(outDir, { recursive: true, force: true });
 
   await build({
@@ -23,7 +25,7 @@ async function run() {
     entryNames: '[name]',
     splitting: false,
     target: 'es2020',
-    sourcemap: false,
+    sourcemap: isDev,
     plugins: [
       copy({
         resolveFrom: 'cwd',
