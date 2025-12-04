@@ -94,7 +94,10 @@ async function openModalDialog(e)
 function buildJosmUrl(title, cookies, heatmap_url)
 {
     const josm_url = new URL('http://127.0.0.1:8111/imagery');
-    const cookies_value = cookies.entries().map(([key, value]) => `${key}=${value}`).toArray().join(';');
+    const cookies_value = Array.from(
+        cookies.entries(),
+        ([key, value]) => `${key}=${value}`
+    ).join(';');
     josm_url.searchParams.set('title', title);
     josm_url.searchParams.set('type', 'tms');
     josm_url.searchParams.set('max_zoom', '15'); // the max zoom that Strava heatmaps support

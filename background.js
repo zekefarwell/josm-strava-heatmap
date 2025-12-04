@@ -1,3 +1,6 @@
+importScripts('browser-polyfill.min.js');
+
+const browserApi = self.browser ?? self.chrome;
 const url_prefix = "https://content-a.strava.com/identified/globalheat/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
@@ -49,14 +52,14 @@ async function getHeatmapUrl(tab_url, store_id)
             map_color = 'hot';
     }
 
-
+    const cookie_entries = await Promise.all(
+        cookie_names.map(async name => [
+            name,
+            await getCookieValue(name, tab_url, store_id)
+        ])
+    );
     const cookies = new Map(
-        await Promise.all(
-            cookie_names.map(async name => [
-                name,
-                await getCookieValue(name, tab_url, store_id)
-            ]).filter(cookie => cookie[1] !== null)
-        )
+        cookie_entries.filter(([_name, value]) => value !== null)
     );
 
     let heatmap_url = url_prefix + map_type + '/' + map_color + url_suffix;
@@ -72,16 +75,32 @@ async function getHeatmapUrl(tab_url, store_id)
 
 async function getCookieValue(name, url, store_id)
 {
-    let cookie = await browser.cookies.get({
+    const details = {
         url: url,
         name: name,
-        storeId: store_id
-    });
+    };
 
-    return (cookie) ? cookie.value : null;
+    if (store_id) {
+        details.storeId = store_id;
+    }
+
+    return new Promise(resolve => {
+        let settled = false;
+        const finish = (cookie) => {
+            if (settled) return;
+            settled = true;
+            resolve(cookie ? cookie.value : null);
+        };
+
+        const maybePromise = browserApi.cookies.get(details, finish);
+
+        if (maybePromise && typeof maybePromise.then === 'function') {
+            maybePromise.then(finish).catch(() => finish(null));
+        }
+    });
 }
 
-browser.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
+browserApi.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
     return getHeatmapUrl(
         sender.tab.url,
         sender.tab.cookieStoreId
