@@ -46,11 +46,22 @@ function packageArtifacts() {
         if (result.errors?.length) {
           return;
         }
-        await fs.mkdir(artifactsDir, { recursive: true });
-        await Promise.all([
-          zipDist(),
-          buildFirefox()
-        ]);
+        try {
+          await fs.mkdir(artifactsDir, { recursive: true });
+          const [chromeZipPath, firefoxArtifacts] = await Promise.all([
+            zipDist(),
+            buildFirefox()
+          ]);
+          console.log(`Chrome package created: ${chromeZipPath}`);
+          if (firefoxArtifacts.length) {
+            console.log(`Firefox package created: ${firefoxArtifacts.join(', ')}`);
+          } else {
+            console.log('Firefox package created: (no artifact paths reported)');
+          }
+        } catch (err) {
+          console.error('Packaging failed:', err);
+          throw err;
+        }
       })
     }
   };
@@ -67,7 +78,7 @@ async function zipDist() {
     archive.pipe(output);
     archive.directory(outDir, false);
     archive.finalize();
-  });
+  }).then(() => outFile);
 }
 
 async function buildFirefox() {
@@ -76,7 +87,7 @@ async function buildFirefox() {
     artifactsDir,
     overwriteDest: true
   }, { shouldExitProgram: false });
-  return result;
+  return result?.artifacts?.map(a => a.path) ?? [];
 }
 
 run().catch(err => {
