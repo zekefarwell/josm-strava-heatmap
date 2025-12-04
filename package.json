@@ -3,9 +3,7 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run build:bg && npm run build:content",
-    "build:bg": "vite build --config vite.background.mjs",
-    "build:content": "vite build --config vite.content.mjs",
+    "build": "node scripts/build.js",
     "package:chrome": "node scripts/package-chrome.js",
     "package:firefox": "node scripts/package-firefox.js",
     "package:all": "npm run package:chrome && npm run package:firefox"
@@ -15,8 +13,8 @@
   },
   "devDependencies": {
     "archiver": "^7.0.1",
-    "vite": "^7.2.6",
-    "vite-plugin-static-copy": "^3.1.4",
+    "esbuild": "^0.27.1",
+    "esbuild-plugin-copy": "^2.1.1",
     "web-ext": "^9.2.0"
   }
 }
