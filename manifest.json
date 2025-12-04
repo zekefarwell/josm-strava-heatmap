@@ -19,7 +19,6 @@
       "*://*.strava.com/maps*"
     ],
     "js": [
-      "browser-polyfill.min.js",
       "content.js"
     ],
     "css": [

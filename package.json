@@ -1,0 +1,22 @@
+{
+  "name": "josm-strava-heatmap",
+  "version": "5.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:bg && npm run build:content",
+    "build:bg": "vite build --config vite.background.mjs",
+    "build:content": "vite build --config vite.content.mjs",
+    "package:chrome": "node scripts/package-chrome.js",
+    "package:firefox": "node scripts/package-firefox.js",
+    "package:all": "npm run package:chrome && npm run package:firefox"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.12.0"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1",
+    "vite": "^5.2.8",
+    "vite-plugin-static-copy": "^0.17.0",
+    "web-ext": "^7.12.0"
+  }
+}

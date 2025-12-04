@@ -1,6 +1,6 @@
-importScripts('browser-polyfill.min.js');
+import browser from 'webextension-polyfill';
 
-const browserApi = self.browser ?? self.chrome;
+const browserApi = browser;
 const url_prefix = "https://content-a.strava.com/identified/globalheat/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
