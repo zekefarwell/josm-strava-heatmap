@@ -87,7 +87,13 @@ async function buildFirefox() {
     artifactsDir,
     overwriteDest: true
   }, { shouldExitProgram: false });
-  return result?.artifacts?.map(a => a.path) ?? [];
+  if (Array.isArray(result?.artifacts) && result.artifacts.length) {
+    return result.artifacts.map(a => a.path);
+  }
+  if (result?.extensionPath) {
+    return [result.extensionPath];
+  }
+  return [];
 }
 
 run().catch(err => {
