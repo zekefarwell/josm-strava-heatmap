@@ -1,11 +1,16 @@
-const { build } = require('esbuild');
-const copy = require('esbuild-plugin-copy').default;
-const archiver = require('archiver');
-const webExt = require('web-ext').default;
-const path = require('path');
-const fs = require('fs/promises');
+import { build } from 'esbuild';
+import esbuildCopy from 'esbuild-plugin-copy';
+import archiver from 'archiver';
+import webExtModule from 'web-ext';
+import { createWriteStream } from 'node:fs';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const rootDir = __dirname;
+const copy = esbuildCopy?.default ?? esbuildCopy;
+const webExt = webExtModule?.default ?? webExtModule;
+
+const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(rootDir, 'dist');
 const chromeOutDir = path.join(distDir, 'chrome');
 const firefoxOutDir = path.join(distDir, 'firefox');
@@ -75,7 +80,7 @@ async function zipChrome() {
   const outFile = path.join(artifactsDir, 'josm-strava-heatmap-chrome.zip');
   await fs.rm(outFile, { force: true });
   return new Promise((resolve, reject) => {
-    const output = require('fs').createWriteStream(outFile);
+    const output = createWriteStream(outFile);
     const archive = archiver('zip', { zlib: { level: 9 } });
     output.on('close', resolve);
     archive.on('error', reject);
