@@ -15,6 +15,8 @@ const distDir = path.join(rootDir, 'dist');
 const chromeOutDir = path.join(distDir, 'chrome');
 const firefoxOutDir = path.join(distDir, 'firefox');
 const artifactsDir = path.join(rootDir, 'artifacts');
+const chromeZipName = 'josm-strava-heatmap-chrome.zip';
+const firefoxZipName = 'josm-strava-heatmap-firefox.zip';
 const chromeManifestPath = path.join(rootDir, 'manifest.v3.json');
 const firefoxManifestPath = path.join(rootDir, 'manifest.v2.json');
 const isDev = process.argv.includes('--dev');
@@ -60,24 +62,20 @@ function buildExtension({ outDir, manifestPath }) {
 async function packageArtifacts() {
   try {
     await fs.mkdir(artifactsDir, { recursive: true });
-    const [chromeZipPath, firefoxArtifacts] = await Promise.all([
-      zipChrome(),
-      buildFirefox()
+    const [chromeArtifact, firefoxArtifact] = await Promise.all([
+      packageChrome(),
+      packageFirefox()
     ]);
-    console.log(`Chrome package created: ${chromeZipPath}`);
-    if (firefoxArtifacts.length) {
-      console.log(`Firefox package created: ${firefoxArtifacts.join(', ')}`);
-    } else {
-      console.log('Firefox package created: (no artifact paths reported)');
-    }
+    console.log(`Chrome package created: ${chromeArtifact}`);
+    console.log(`Firefox package created: ${firefoxArtifact}`);
   } catch (err) {
     console.error('Packaging failed:', err);
     throw err;
   }
 }
 
-async function zipChrome() {
-  const outFile = path.join(artifactsDir, 'josm-strava-heatmap-chrome.zip');
+async function packageChrome() {
+  const outFile = path.join(artifactsDir, chromeZipName);
   await fs.rm(outFile, { force: true });
   return new Promise((resolve, reject) => {
     const output = createWriteStream(outFile);
@@ -90,19 +88,27 @@ async function zipChrome() {
   }).then(() => outFile);
 }
 
-async function buildFirefox() {
+async function packageFirefox() {
   const result = await webExt.cmd.build({
     sourceDir: firefoxOutDir,
     artifactsDir,
-    overwriteDest: true
-  }, { shouldExitProgram: false });
+    overwriteDest: true,
+    filename: firefoxZipName
+  }, {
+    shouldExitProgram: false,
+    showReadyMessage: false
+  });
   if (Array.isArray(result?.artifacts) && result.artifacts.length) {
-    return result.artifacts.map(a => a.path);
+    const artifactPath = result.artifacts[0]?.path;
+    if (!artifactPath) {
+      throw new Error('Firefox package created but no artifact path reported.');
+    }
+    return artifactPath;
   }
   if (result?.extensionPath) {
-    return [result.extensionPath];
+    return result.extensionPath;
   }
-  return [];
+  throw new Error('Firefox package created but no artifact path reported.');
 }
 
 run().catch(err => {
