@@ -12,7 +12,7 @@ function insertModalHtml()
     document.body.insertAdjacentHTML('afterbegin', `
         <div id="jsh-modal" class="jsh-modal">
             <div id="jsh-modal-dialog" class="jsh-modal-dialog">
-                <h4 id="jsh-modal-header" class="modal-header"></h4>
+                <h4 id="jsh-modal-header" class="modal-header">Open heatmap in JOSM</h4>
                 <div id="jsh-modal-body" class="modal-body"></div>
             </div>
         </div>
@@ -115,18 +115,12 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
 {
     let title = `Strava Heatmap (${map_color}/${map_type})`;
     let open_in_josm_url = buildJosmUrl(title, cookies, heatmap_url);
-    let encoded_heatmap_url = encodeURIComponent(heatmap_url);
-    let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
     let heatmap_url_tms = `tms:${heatmap_url}`;
 
-    document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
     document.querySelector('#jsh-modal-body').innerHTML = `
         <p>
             <a id="jsh-open-in-josm" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in JOSM
-            </a>
-            <a id="jsh-open-in-id" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
-                Open in iD
             </a>
         </p>
         <p>Or, copy the URL to manually add a custom imagery layer in your editor of choice: </p>
@@ -151,7 +145,6 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
         </code>
     `;
     document.querySelector("#jsh-open-in-josm").setAttribute("href", open_in_josm_url);
-    document.querySelector("#jsh-open-in-id").setAttribute("href", open_in_id_url);
     document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
     document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
