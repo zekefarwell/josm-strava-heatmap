@@ -6,7 +6,9 @@ const path = require('path');
 const fs = require('fs/promises');
 
 const rootDir = __dirname;
-const outDir = path.join(rootDir, 'dist');
+const distDir = path.join(rootDir, 'dist');
+const chromeOutDir = path.join(distDir, 'chrome');
+const firefoxOutDir = path.join(distDir, 'firefox');
 const artifactsDir = path.join(rootDir, 'artifacts');
 const chromeManifestPath = path.join(rootDir, 'manifest.v3.json');
 const firefoxManifestPath = path.join(rootDir, 'manifest.v2.json');
@@ -14,9 +16,18 @@ const isDev = process.argv.includes('--dev');
 
 async function run() {
   console.log(`Building in ${isDev ? 'development' : 'production'} mode...`);
-  await fs.rm(outDir, { recursive: true, force: true });
+  await fs.rm(distDir, { recursive: true, force: true });
 
-  await build({
+  await Promise.all([
+    buildExtension({ outDir: chromeOutDir, manifestPath: chromeManifestPath }),
+    buildExtension({ outDir: firefoxOutDir, manifestPath: firefoxManifestPath })
+  ]);
+
+  await packageArtifacts();
+}
+
+function buildExtension({ outDir, manifestPath }) {
+  return build({
     entryPoints: [
       path.join(rootDir, 'background.js'),
       path.join(rootDir, 'content.js')
@@ -32,46 +43,35 @@ async function run() {
       copy({
         resolveFrom: 'cwd',
         assets: [
-          { from: [chromeManifestPath], to: [path.join(outDir, 'manifest.json')] },
+          { from: [manifestPath], to: [path.join(outDir, 'manifest.json')] },
           { from: ['content.css'], to: [path.join(outDir, 'content.css')] },
           { from: ['icons/**/*'], to: [path.join(outDir, 'icons')] }
         ]
-      }),
-      packageArtifacts()
+      })
     ]
   });
 }
 
-function packageArtifacts() {
-  return {
-    name: 'package-artifacts',
-    setup(build) {
-      build.onEnd(async (result) => {
-        if (result.errors?.length) {
-          return;
-        }
-        try {
-          await fs.mkdir(artifactsDir, { recursive: true });
-          const [chromeZipPath, firefoxArtifacts] = await Promise.all([
-            zipDist(),
-            buildFirefox()
-          ]);
-          console.log(`Chrome package created: ${chromeZipPath}`);
-          if (firefoxArtifacts.length) {
-            console.log(`Firefox package created: ${firefoxArtifacts.join(', ')}`);
-          } else {
-            console.log('Firefox package created: (no artifact paths reported)');
-          }
-        } catch (err) {
-          console.error('Packaging failed:', err);
-          throw err;
-        }
-      })
+async function packageArtifacts() {
+  try {
+    await fs.mkdir(artifactsDir, { recursive: true });
+    const [chromeZipPath, firefoxArtifacts] = await Promise.all([
+      zipChrome(),
+      buildFirefox()
+    ]);
+    console.log(`Chrome package created: ${chromeZipPath}`);
+    if (firefoxArtifacts.length) {
+      console.log(`Firefox package created: ${firefoxArtifacts.join(', ')}`);
+    } else {
+      console.log('Firefox package created: (no artifact paths reported)');
     }
-  };
+  } catch (err) {
+    console.error('Packaging failed:', err);
+    throw err;
+  }
 }
 
-async function zipDist() {
+async function zipChrome() {
   const outFile = path.join(artifactsDir, 'josm-strava-heatmap-chrome.zip');
   await fs.rm(outFile, { force: true });
   return new Promise((resolve, reject) => {
@@ -80,31 +80,24 @@ async function zipDist() {
     output.on('close', resolve);
     archive.on('error', reject);
     archive.pipe(output);
-    archive.directory(outDir, false);
+    archive.directory(chromeOutDir, false);
     archive.finalize();
   }).then(() => outFile);
 }
 
 async function buildFirefox() {
-  const manifestPath = path.join(outDir, 'manifest.json');
-  const originalManifest = await fs.readFile(manifestPath);
-  await fs.copyFile(firefoxManifestPath, manifestPath);
-  try {
-    const result = await webExt.cmd.build({
-      sourceDir: outDir,
-      artifactsDir,
-      overwriteDest: true
-    }, { shouldExitProgram: false });
-    if (Array.isArray(result?.artifacts) && result.artifacts.length) {
-      return result.artifacts.map(a => a.path);
-    }
-    if (result?.extensionPath) {
-      return [result.extensionPath];
-    }
-    return [];
-  } finally {
-    await fs.writeFile(manifestPath, originalManifest);
+  const result = await webExt.cmd.build({
+    sourceDir: firefoxOutDir,
+    artifactsDir,
+    overwriteDest: true
+  }, { shouldExitProgram: false });
+  if (Array.isArray(result?.artifacts) && result.artifacts.length) {
+    return result.artifacts.map(a => a.path);
   }
+  if (result?.extensionPath) {
+    return [result.extensionPath];
+  }
+  return [];
 }
 
 run().catch(err => {
