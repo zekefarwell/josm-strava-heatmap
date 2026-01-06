@@ -1,6 +1,4 @@
 import browser from 'webextension-polyfill';
-
-const browserApi = browser;
 const url_prefix = "https://content-a.strava.com/identified/globalheat/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
@@ -89,14 +87,14 @@ async function getCookieValue(name, url, store_id)
     }
 
     try {
-        const cookie = await browserApi.cookies.get(details);
+        const cookie = await browser.cookies.get(details);
         return cookie ? cookie.value : null;
     } catch {
         return null;
     }
 }
 
-browserApi.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
+browser.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
     return getHeatmapUrl(
         sender.tab.url,
         sender.tab.cookieStoreId
