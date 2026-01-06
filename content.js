@@ -31,13 +31,13 @@ function insertModalHtml()
  */
 async function insertButtonHtml()
 {
-    let ctrl_top_right = document.querySelector('.mapboxgl-ctrl-top-right');
+    let ctrlTopRight = document.querySelector('.mapboxgl-ctrl-top-right');
     // Sometimes the mapbox controls aren't loaded right away and we need to wait a little bit
-    for (let i = 0; ctrl_top_right === null && i < 10; i++) {
+    for (let i = 0; ctrlTopRight === null && i < 10; i++) {
         await new Promise(r => setTimeout(r, 300));
-        ctrl_top_right = document.querySelector('.mapboxgl-ctrl-top-right');
+        ctrlTopRight = document.querySelector('.mapboxgl-ctrl-top-right');
     }
-    if (ctrl_top_right === null) {
+    if (ctrlTopRight === null) {
         console.warn('Could not find .mapboxgl-ctrl-top-right element after 10 attempts');
         return;
     }
@@ -56,7 +56,7 @@ async function insertButtonHtml()
         <path d="M46 32.8H32.8V46H46zm-30.8 0H2V46h13.2zm15.4 0H17.4V46h13.2zm0-15.4H17.4v13.2h13.2zm-15.4 0H2v13.2h13.2zm30.8 0H32.8v13.2H46zM15.2 2H2v13.2h13.2zM46 2H32.8v13.2H46zM30.6 2H17.4v13.2h13.2z" fill="url(#b)"/>
         </svg>
     `;
-    ctrl_top_right.prepend(button);
+    ctrlTopRight.prepend(button);
     button.addEventListener("click", openModalDialog);
 }
 
@@ -79,9 +79,9 @@ async function openModalDialog(e)
             );
         } else {
             setModalHtmlSuccess(
-                response.heatmap_url,
-                response.map_color,
-                response.map_type,
+                response.heatmapUrl,
+                response.mapColor,
+                response.mapType,
                 response.cookies,
             );
         }
@@ -98,32 +98,32 @@ async function openModalDialog(e)
  * Builds a JOSM URL for opening the heatmap as a TMS layer
  * @param {string} title - The title of the layer
  * @param {Map<string, string>} cookies - The cookies needed for authentication
- * @param {string} heatmap_url - The heatmap URL
+ * @param {string} heatmapUrl - The heatmap URL
  * @returns {string} The complete JOSM URL
  */
-function buildJosmUrl(title, cookies, heatmap_url)
+function buildJosmUrl(title, cookies, heatmapUrl)
 {
-    const josm_url = new URL(JOSM_IMAGERY_URL);
-    const cookies_value = Array.from(
+    const josmUrl = new URL(JOSM_IMAGERY_URL);
+    const cookiesValue = Array.from(
         cookies.entries(),
         ([key, value]) => `${key}=${value}`
     ).join(';');
-    josm_url.searchParams.set('title', title);
-    josm_url.searchParams.set('type', 'tms');
-    josm_url.searchParams.set('max_zoom', MAX_ZOOM); // the max zoom that Strava heatmaps support
-    josm_url.searchParams.set('cookies', cookies_value);
-    josm_url.searchParams.set('url', heatmap_url);
-    return josm_url.toString();
+    josmUrl.searchParams.set('title', title);
+    josmUrl.searchParams.set('type', 'tms');
+    josmUrl.searchParams.set('max_zoom', MAX_ZOOM); // the max zoom that Strava heatmaps support
+    josmUrl.searchParams.set('cookies', cookiesValue);
+    josmUrl.searchParams.set('url', heatmapUrl);
+    return josmUrl.toString();
 }
 
 /**
  * Set the HTML content of the modal after successfully building the heatmap url
  */
-function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
+function setModalHtmlSuccess(heatmapUrl, mapColor, mapType, cookies)
 {
-    let title = `Strava Heatmap (${map_color}/${map_type})`;
-    let open_in_josm_url = buildJosmUrl(title, cookies, heatmap_url);
-    let heatmap_url_tms = `tms:${heatmap_url}`;
+    let title = `Strava Heatmap (${mapColor}/${mapType})`;
+    let openInJosmUrl = buildJosmUrl(title, cookies, heatmapUrl);
+    let heatmapUrlTms = `tms:${heatmapUrl}`;
 
     document.querySelector('#jsh-modal-body').innerHTML = `
         <p>
@@ -152,14 +152,14 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
             <pre id="jsh-imagery-url"></pre>
         </code>
     `;
-    document.querySelector("#jsh-open-in-josm").setAttribute("href", open_in_josm_url);
-    document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
+    document.querySelector("#jsh-open-in-josm").setAttribute("href", openInJosmUrl);
+    document.querySelector("#jsh-imagery-url").textContent = heatmapUrlTms;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
     document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
-        document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
+        document.querySelector("#jsh-imagery-url").textContent = heatmapUrlTms;
     });
     document.querySelector("#jsh-tms-prefix-false").addEventListener("click", function () {
-        document.querySelector("#jsh-imagery-url").textContent = heatmap_url;
+        document.querySelector("#jsh-imagery-url").textContent = heatmapUrl;
     });
 }
 
@@ -178,6 +178,6 @@ function setModalHtmlError(header, body)
  */
 function copyUrlToClipboard()
 {
-    let heatmap_url_manual_copy = document.querySelector("#jsh-imagery-url").textContent;
-    navigator.clipboard.writeText(heatmap_url_manual_copy);
+    let heatmapUrlManualCopy = document.querySelector("#jsh-imagery-url").textContent;
+    navigator.clipboard.writeText(heatmapUrlManualCopy);
 }
