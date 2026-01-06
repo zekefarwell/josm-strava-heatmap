@@ -33,6 +33,10 @@ async function insertButtonHtml()
         await new Promise(r => setTimeout(r, 300));
         ctrl_top_right = document.querySelector('.mapboxgl-ctrl-top-right');
     }
+    if (ctrl_top_right === null) {
+        console.warn('Could not find .mapboxgl-ctrl-top-right element after 10 attempts');
+        return;
+    }
     let button = document.createElement('button');
     button.className = 'jsh-modal-toggle';
     button.innerHTML = `
