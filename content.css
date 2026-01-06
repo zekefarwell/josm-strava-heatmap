@@ -31,26 +31,6 @@ button.jsh-modal-toggle {
     margin: 200px auto;
     padding: 20px;
 }
-.jsh-modal-dialog code {
-    background-color: lightgray;
-    border-radius: 3px;
-    padding: 10px 50px 10px 10px;
-    display: block;
-    position: relative;
-    margin-bottom: 7px;
-}
-.jsh-modal-dialog pre {
-    margin: 0;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    word-break: break-all;
-}
-.jsh-modal-dialog .copy-button {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    background-color: transparent;
-}
 .jsh-modal-dialog > .modal-header {
     margin-top: 0px;
 }
@@ -80,8 +60,4 @@ button.jsh-modal-toggle {
 }
 .jsh-status-error {
     color: #c62828;
-}
-
-.jsh-modal-dialog .btn.active {
-    background-color: #f0f0f5;
 }

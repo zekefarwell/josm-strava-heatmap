@@ -7,8 +7,7 @@
     "48": "icons/icon.png"
   },
   "permissions": [
-    "cookies",
-    "clipboardWrite"
+    "cookies"
   ],
   "host_permissions": [
     "*://*.strava.com/*"
