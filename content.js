@@ -1,5 +1,9 @@
 import browser from 'webextension-polyfill';
 
+// Constants
+const JOSM_IMAGERY_URL = 'http://127.0.0.1:8111/imagery';
+const MAX_ZOOM = '15';
+
 insertModalHtml();
 insertButtonHtml();
 
@@ -99,14 +103,14 @@ async function openModalDialog(e)
  */
 function buildJosmUrl(title, cookies, heatmap_url)
 {
-    const josm_url = new URL('http://127.0.0.1:8111/imagery');
+    const josm_url = new URL(JOSM_IMAGERY_URL);
     const cookies_value = Array.from(
         cookies.entries(),
         ([key, value]) => `${key}=${value}`
     ).join(';');
     josm_url.searchParams.set('title', title);
     josm_url.searchParams.set('type', 'tms');
-    josm_url.searchParams.set('max_zoom', '15'); // the max zoom that Strava heatmaps support
+    josm_url.searchParams.set('max_zoom', MAX_ZOOM); // the max zoom that Strava heatmaps support
     josm_url.searchParams.set('cookies', cookies_value);
     josm_url.searchParams.set('url', heatmap_url);
     return josm_url.toString();
