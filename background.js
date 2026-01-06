@@ -5,12 +5,18 @@ const url_prefix = "https://content-a.strava.com/identified/globalheat/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
 /** @type {string[]} */
-const cookie_names = [
+const required_cookie_names = [
     'CloudFront-Key-Pair-Id',
     'CloudFront-Policy',
     'CloudFront-Signature',
+];
+
+/** @type {string[]} */
+const optional_cookie_names = [
     '_strava_idcf'
 ];
+
+const all_cookie_names = [...required_cookie_names, ...optional_cookie_names];
 
 async function getHeatmapUrl(tab_url, store_id)
 {
@@ -53,7 +59,7 @@ async function getHeatmapUrl(tab_url, store_id)
     }
 
     const cookie_entries = await Promise.all(
-        cookie_names.map(async name => [
+        all_cookie_names.map(async name => [
             name,
             await getCookieValue(name, tab_url, store_id)
         ])
@@ -64,8 +70,10 @@ async function getHeatmapUrl(tab_url, store_id)
 
     let heatmap_url = url_prefix + map_type + '/' + map_color + url_suffix;
 
+    const hasRequiredCookies = required_cookie_names.every(name => cookies.has(name));
+
     return {
-        error: cookies.size !== cookie_names.length,
+        error: !hasRequiredCookies,
         heatmap_url,
         map_color,
         map_type,
