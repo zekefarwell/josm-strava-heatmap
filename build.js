@@ -8,6 +8,8 @@ const fs = require('fs/promises');
 const rootDir = __dirname;
 const outDir = path.join(rootDir, 'dist');
 const artifactsDir = path.join(rootDir, 'artifacts');
+const chromeManifestPath = path.join(rootDir, 'manifest.v3.json');
+const firefoxManifestPath = path.join(rootDir, 'manifest.v2.json');
 const isDev = process.argv.includes('--dev');
 
 async function run() {
@@ -30,7 +32,7 @@ async function run() {
       copy({
         resolveFrom: 'cwd',
         assets: [
-          { from: ['manifest.json'], to: [path.join(outDir, 'manifest.json')] },
+          { from: [chromeManifestPath], to: [path.join(outDir, 'manifest.json')] },
           { from: ['content.css'], to: [path.join(outDir, 'content.css')] },
           { from: ['icons/**/*'], to: [path.join(outDir, 'icons')] }
         ]
@@ -84,18 +86,25 @@ async function zipDist() {
 }
 
 async function buildFirefox() {
-  const result = await webExt.cmd.build({
-    sourceDir: outDir,
-    artifactsDir,
-    overwriteDest: true
-  }, { shouldExitProgram: false });
-  if (Array.isArray(result?.artifacts) && result.artifacts.length) {
-    return result.artifacts.map(a => a.path);
+  const manifestPath = path.join(outDir, 'manifest.json');
+  const originalManifest = await fs.readFile(manifestPath);
+  await fs.copyFile(firefoxManifestPath, manifestPath);
+  try {
+    const result = await webExt.cmd.build({
+      sourceDir: outDir,
+      artifactsDir,
+      overwriteDest: true
+    }, { shouldExitProgram: false });
+    if (Array.isArray(result?.artifacts) && result.artifacts.length) {
+      return result.artifacts.map(a => a.path);
+    }
+    if (result?.extensionPath) {
+      return [result.extensionPath];
+    }
+    return [];
+  } finally {
+    await fs.writeFile(manifestPath, originalManifest);
   }
-  if (result?.extensionPath) {
-    return [result.extensionPath];
-  }
-  return [];
 }
 
 run().catch(err => {
