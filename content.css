@@ -55,21 +55,31 @@ button.jsh-modal-toggle {
     margin-top: 0px;
 }
 
-.jsh-modal-dialog a.btn {
-    margin-right: 4px;
+.jsh-modal-dialog button#jsh-open-in-josm {
     padding: 10px 20px;
-    line-height: 2;
     border: 1px solid #E7E7E7;
     border-radius: 5px;
+    background-color: #fff;
     color: #000;
     font-weight: bold;
+    cursor: pointer;
 }
-.jsh-modal-dialog a.btn:visited {
-    color: #000;
-}
-.jsh-modal-dialog a.btn:hover {
+.jsh-modal-dialog button#jsh-open-in-josm:hover {
     background-color: #F0F0F0;
-    text-decoration: none;
+}
+.jsh-modal-dialog button#jsh-open-in-josm:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+#jsh-josm-status {
+    margin-left: 10px;
+}
+.jsh-status-success {
+    color: #2e7d32;
+}
+.jsh-status-error {
+    color: #c62828;
 }
 
 .jsh-modal-dialog .btn.active {

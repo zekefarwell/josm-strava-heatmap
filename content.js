@@ -127,9 +127,10 @@ function setModalHtmlSuccess(heatmapUrl, mapColor, mapType, cookies)
 
     document.querySelector('#jsh-modal-body').innerHTML = `
         <p>
-            <a id="jsh-open-in-josm" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
+            <button id="jsh-open-in-josm" class="btn btn-default">
                 Open in JOSM
-            </a>
+            </button>
+            <span id="jsh-josm-status"></span>
         </p>
         <p>Or, copy the URL to manually add a custom imagery layer in your editor of choice: </p>
         <div class="btn-group btn-group-sm" data-toggle="buttons">
@@ -152,7 +153,7 @@ function setModalHtmlSuccess(heatmapUrl, mapColor, mapType, cookies)
             <pre id="jsh-imagery-url"></pre>
         </code>
     `;
-    document.querySelector("#jsh-open-in-josm").setAttribute("href", openInJosmUrl);
+    document.querySelector("#jsh-open-in-josm").addEventListener("click", () => openInJosm(openInJosmUrl));
     document.querySelector("#jsh-imagery-url").textContent = heatmapUrlTms;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
     document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
@@ -180,4 +181,29 @@ function copyUrlToClipboard()
 {
     let heatmapUrlManualCopy = document.querySelector("#jsh-imagery-url").textContent;
     navigator.clipboard.writeText(heatmapUrlManualCopy);
+}
+
+/**
+ * Open the heatmap layer in JOSM via Remote Control
+ * @param {string} josmUrl - The JOSM remote control URL
+ */
+async function openInJosm(josmUrl)
+{
+    const status = document.querySelector("#jsh-josm-status");
+    const button = document.querySelector("#jsh-open-in-josm");
+
+    button.disabled = true;
+    status.textContent = "Adding layer...";
+    status.className = "";
+
+    try {
+        await fetch(josmUrl);
+        status.textContent = "Layer added!";
+        status.className = "jsh-status-success";
+    } catch (err) {
+        status.textContent = "Failed - is JOSM running?";
+        status.className = "jsh-status-error";
+    } finally {
+        button.disabled = false;
+    }
 }
