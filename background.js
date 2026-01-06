@@ -75,29 +75,17 @@ async function getHeatmapUrl(tab_url, store_id)
 
 async function getCookieValue(name, url, store_id)
 {
-    const details = {
-        url: url,
-        name: name,
-    };
-
+    const details = { url, name };
     if (store_id) {
         details.storeId = store_id;
     }
 
-    return new Promise(resolve => {
-        let settled = false;
-        const finish = (cookie) => {
-            if (settled) return;
-            settled = true;
-            resolve(cookie ? cookie.value : null);
-        };
-
-        const maybePromise = browserApi.cookies.get(details, finish);
-
-        if (maybePromise && typeof maybePromise.then === 'function') {
-            maybePromise.then(finish).catch(() => finish(null));
-        }
-    });
+    try {
+        const cookie = await browserApi.cookies.get(details);
+        return cookie ? cookie.value : null;
+    } catch {
+        return null;
+    }
 }
 
 browserApi.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
