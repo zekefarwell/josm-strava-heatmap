@@ -197,10 +197,13 @@ async function openInJosm(josmUrl)
     status.className = "";
 
     try {
-        await fetch(josmUrl);
+        // mode: 'no-cors' required because JOSM is HTTP and Strava is HTTPS
+        // We can't read the response, but the request will still be made
+        await fetch(josmUrl, { mode: 'no-cors' });
         status.textContent = "Layer added!";
         status.className = "jsh-status-success";
     } catch (err) {
+        console.error('JOSM remote control error:', err);
         status.textContent = "Failed - is JOSM running?";
         status.className = "jsh-status-error";
     } finally {
