@@ -97,17 +97,17 @@ function handleAnimationEnd()
 /**
  * Builds a JOSM URL for opening the heatmap as a TMS layer
  * @param {string} title - The title of the layer
- * @param {Map<string, string>} cookies - The cookies needed for authentication
+ * @param {Array<[string, string]>} cookies - The cookies needed for authentication
  * @param {string} heatmapUrl - The heatmap URL
  * @returns {string} The complete JOSM URL
  */
 function buildJosmUrl(title, cookies, heatmapUrl)
 {
     const josmUrl = new URL(JOSM_IMAGERY_URL);
-    const cookiesValue = Array.from(
-        cookies.entries(),
-        ([key, value]) => `${key}=${value}`
-    ).join(';');
+    const cookiesValue = cookies
+        .filter(([_key, value]) => value !== null && value !== undefined)
+        .map(([key, value]) => `${key}=${value}`)
+        .join(';');
     josmUrl.searchParams.set('title', title);
     josmUrl.searchParams.set('type', 'tms');
     josmUrl.searchParams.set('max_zoom', MAX_ZOOM);

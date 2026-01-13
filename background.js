@@ -50,6 +50,7 @@ async function getHeatmapUrl(tabUrl, storeId)
     const cookies = new Map(
         cookieEntries.filter(([_name, value]) => value !== null)
     );
+    const cookieEntriesForMessage = Array.from(cookies.entries());
 
     const heatmapUrl = URL_PREFIX + mapType + '/' + mapColor + URL_SUFFIX;
 
@@ -60,7 +61,7 @@ async function getHeatmapUrl(tabUrl, storeId)
         heatmapUrl,
         mapColor,
         mapType,
-        cookies,
+        cookies: cookieEntriesForMessage,
     };
 }
 
