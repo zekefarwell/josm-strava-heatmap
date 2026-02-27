@@ -8,8 +8,7 @@
   },
   "permissions": [
     "cookies",
-    "*://*.strava.com/*",
-    "clipboardWrite"
+    "*://*.strava.com/*"
   ],
   "content_scripts": [{
     "matches": [
@@ -17,7 +16,6 @@
       "*://*.strava.com/maps*"
     ],
     "js": [
-      "browser-polyfill.min.js",
       "content.js"
     ],
     "css": [
@@ -26,9 +24,9 @@
   }],
   "background": {
     "scripts": [
-      "browser-polyfill.min.js",
       "background.js"
-    ]
+    ],
+    "persistent": false
   },
   "homepage_url": "https://github.com/zekefarwell/josm-strava-heatmap"
 }

@@ -1,77 +1,53 @@
-button.jsh-modal-toggle {
+.jsh-button {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    z-index: 1;
     border: none;
     border-radius: 3px;
     width: 40px;
     height: 40px;
-    margin: 80px 10px 10px;
-    padding: 0;
+    padding: 4px;
     background-color: white;
-    /* background-image: url('icons/icon.svg'); */
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     cursor: pointer;
     pointer-events: auto;
 }
 
-.jsh-modal {
-    display: none;
+.jsh-button:disabled {
+    cursor: default;
+    opacity: 0.6;
 }
-.jsh-modal.active {
-    display: block;
-    position: fixed;
-    z-index: 200;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.75);
-}
-.jsh-modal-dialog {
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
-    max-width: 600px;
-    margin: 200px auto;
-    padding: 20px;
-}
-.jsh-modal-dialog code {
-    background-color: lightgray;
-    border-radius: 3px;
-    padding: 10px 50px 10px 10px;
-    display: block;
-    position: relative;
-    margin-bottom: 7px;
-}
-.jsh-modal-dialog pre {
-    margin: 0;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    word-break: break-all;
-}
-.jsh-modal-dialog .copy-button {
+
+/* Stack all SVGs on top of each other */
+.jsh-button svg {
     position: absolute;
-    right: 8px;
-    top: 8px;
-    background-color: transparent;
-}
-.jsh-modal-dialog > .modal-header {
-    margin-top: 0px;
+    top: 4px;
+    left: 4px;
+    width: 32px;
+    height: 32px;
 }
 
-.jsh-modal-dialog a.btn {
-    margin-right: 4px;
-    padding: 10px 20px;
-    line-height: 2;
-    border: 1px solid #E7E7E7;
-    border-radius: 5px;
-    color: #000;
-    font-weight: bold;
-}
-.jsh-modal-dialog a.btn:visited {
-    color: #000;
-}
-.jsh-modal-dialog a.btn:hover {
-    background-color: #F0F0F0;
-    text-decoration: none;
+/* Default icon always visible */
+.jsh-button .icon-default {
+    opacity: 1;
 }
 
-.jsh-modal-dialog .btn.active {
-    background-color: #f0f0f5;
+/* Status icons hidden by default */
+.jsh-button .icon-success,
+.jsh-button .icon-error {
+    opacity: 0;
+}
+
+/* Animation for status icons */
+@keyframes flash-status {
+    0% { opacity: 0; }
+    5% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.jsh-button.jsh-success .icon-success,
+.jsh-button.jsh-error .icon-error {
+    animation: flash-status 10s forwards;
 }

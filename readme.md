@@ -1,7 +1,7 @@
 # JOSM Strava Heatmap
 
 This browser extension makes it easy to use the [Strava Global Heatmap][1] in
-[JOSM][2], [iD][8], and other mapping applications that support TMS imagery.
+[JOSM][2] and other mapping applications that support TMS imagery.
 
 Accessing this imagery externally requires a set of key parameters that you obtain
 by signing into the Strava website, copying the values from several cookies, and
@@ -11,10 +11,12 @@ url for you which makes this weekly process a bit less annoying.
 
 OSM Wiki: [Using the Strava Heatmap][3]
 
+If you use iD, the [Strava Heatmap Extension][8] is a better fit.
+
 [1]: https://www.strava.com/heatmap
 [2]: https://josm.openstreetmap.de/ "Java OpenStreetMap Editor"
 [3]: https://wiki.openstreetmap.org/wiki/Strava
-[8]: https://www.openstreetmap.org
+[8]: https://github.com/julcnx/strava-heatmap-extension
 
 ## Installation
 
@@ -31,12 +33,10 @@ should also work in Microsoft Edge and other Chromium based browsers.
 ![Screenshot of Strava Heatmap with button added](screenshot.png)
 
 4. Open the heatmap in your editor
-   - Click the appropriate button to open the heatmap in either JOSM or iD.
-     For [JOSM, Remote control][9] must be enabled
+   - Click the button to open the heatmap in JOSM. For [JOSM, Remote control][9]
+     must be enabled
    - Alternatively you can copy the url (with or without the `tms:` prefix) and paste
-     it into a custom imagery layer in you editor
-
-![Screenshot of modal dialog with heatmap url](screenshot2.png)
+     it into a custom imagery layer in your editor
 
 [9]: https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl
 
@@ -46,11 +46,6 @@ Copy the url without the `tms:` prefix.  Add a new TMS layer in the [JOSM imager
 Name it Strava Heatmap and paste in the copied url.  If you are updating an expired Strava Heatmap
 layer you can just double-click it to replace url in the list view.  In this case, copy the url
 *with* the `tms:` prefix as it is required here.
-
-### Manually adding the imagery in iD
-
-Copy the url without the `tms:` prefix.  Open the Backgrounds panel and select "Custom" at the bottom.
-Paste the copied url into the Custom Background Settings window that opens.
 
 [4]: https://addons.mozilla.org/en-US/firefox/addon/josm-strava-heatmap/
 [5]: https://www.strava.com/heatmap
