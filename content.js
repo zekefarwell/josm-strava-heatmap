@@ -13,16 +13,17 @@ insertButton();
  */
 async function insertButton()
 {
-    let ctrlTopRight = document.querySelector('.mapboxgl-ctrl-top-right');
-    // Sometimes the mapbox controls aren't loaded right away and we need to wait a little bit
-    for (let i = 0; ctrlTopRight === null && i < 10; i++) {
+    const selector = '[class*="Map_map__"]';
+    let mapContainer = document.querySelector(selector);
+    for (let i = 0; mapContainer === null && i < 10; i++) {
         await new Promise(r => setTimeout(r, 300));
-        ctrlTopRight = document.querySelector('.mapboxgl-ctrl-top-right');
+        mapContainer = document.querySelector(selector);
     }
-    if (ctrlTopRight === null) {
-        console.warn('Could not find .mapboxgl-ctrl-top-right element after 10 attempts');
+    if (mapContainer === null) {
+        console.warn('Could not find Map container element after 10 attempts');
         return;
     }
+
     button = document.createElement('button');
     button.className = 'jsh-button';
     button.title = 'Open heatmap in JOSM';
@@ -47,7 +48,7 @@ async function insertButton()
             <path d="M14 16.8L16.8 14 24 21.2 31.2 14 34 16.8 26.8 24 34 31.2 31.2 34 24 26.8 16.8 34 14 31.2 21.2 24z" fill="white"/>
         </svg>
     `;
-    ctrlTopRight.prepend(button);
+    mapContainer.appendChild(button);
     button.addEventListener('click', handleButtonClick);
     button.addEventListener('animationend', handleAnimationEnd);
 }
