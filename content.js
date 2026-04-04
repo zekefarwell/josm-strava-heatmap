@@ -76,7 +76,7 @@ async function openModalDialog(e)
                 response.heatmap_url,
                 response.map_color,
                 response.map_type,
-                response.cookies,
+                new Map(Object.entries(response.cookies)),
             );
         }
     } catch(err) {
