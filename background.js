@@ -1,3 +1,7 @@
+if (typeof globalThis.browser === "undefined" && typeof chrome !== "undefined") {
+  globalThis.browser = chrome;
+}
+
 const url_prefix = "https://content-a.strava.com/identified/globalheat/";
 const url_suffix = "/{zoom}/{x}/{y}.png"
 
@@ -66,7 +70,7 @@ async function getHeatmapUrl(tab_url, store_id)
         heatmap_url,
         map_color,
         map_type,
-        cookies,
+        cookies: Object.fromEntries(cookies)
     };
 }
 
@@ -81,9 +85,13 @@ async function getCookieValue(name, url, store_id)
     return (cookie) ? cookie.value : null;
 }
 
-browser.runtime.onMessage.addListener(async function (_message, sender, _sendResponse) {
-    return getHeatmapUrl(
+browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.name !== 'getHeatmapUrl') return;
+    getHeatmapUrl(
         sender.tab.url,
         sender.tab.cookieStoreId
-    )
+    ).then(
+        (response) => sendResponse(response)
+    );
+    return true;
 });
