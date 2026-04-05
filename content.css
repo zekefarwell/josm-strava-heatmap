@@ -68,19 +68,32 @@ button.jsh-modal-toggle {
     margin-right: 4px;
     padding: 10px 20px;
     line-height: 2;
-    border: 1px solid #E7E7E7;
+    border: 1px solid #CCC;
     border-radius: 5px;
-    color: #000;
+    color: #333;
     font-weight: bold;
+    background-color: #F0F0F0;
 }
 .jsh-modal-dialog a.btn:visited {
-    color: #000;
+    color: #333;
 }
-.jsh-modal-dialog a.btn:hover {
-    background-color: #F0F0F0;
+.jsh-modal-dialog a.btn:hover, .jsh-modal-dialog a.btn:active  {
+    color: #000;
+    background-color: #E9E9E9;
+    border-color: #BBB;
     text-decoration: none;
 }
 
-.jsh-modal-dialog .btn.active {
-    background-color: #f0f0f5;
+.jsh-modal-dialog .copy-button {
+    border: none;
+    border-radius: 5px;
+}
+.jsh-modal-dialog .copy-button svg {
+    fill: gray;
+}
+.jsh-modal-dialog .copy-button:hover {
+    cursor: pointer;
+}
+.jsh-modal-dialog .copy-button:hover svg {
+    fill: #444;
 }
