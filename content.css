@@ -16,6 +16,9 @@ button.jsh-modal-toggle {
     button.jsh-modal-toggle {
         margin: 10px;
     }
+    .mapboxgl-control-container > .mapboxgl-ctrl-top-right {
+        z-index: 50;
+    }
 }
 
 .jsh-modal {
@@ -33,7 +36,7 @@ button.jsh-modal-toggle {
     background: white;
     border-radius: 4px;
     box-shadow: 0 0 5px 5px rgba(0,0,0,0.2);
-    max-width: 600px;
+    max-width: 640px;
     margin: 200px auto;
     padding: 20px;
 }
