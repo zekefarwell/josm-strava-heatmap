@@ -59,14 +59,19 @@ async function getHeatmapUrl(tab_url, store_id)
             cookie_names.map(async name => [
                 name,
                 await getCookieValue(name, tab_url, store_id)
-            ]).filter(cookie => cookie[1] !== null)
+            ])
         )
     );
+    let error = false;
+    for (let cookie of cookies) {
+        if (cookie[1] == null)
+            error = true;
+    }
 
     let heatmap_url = url_prefix + map_type + '/' + map_color + url_suffix;
 
     return {
-        error: cookies.size !== cookie_names.length,
+        error: error,
         heatmap_url,
         map_color,
         map_type,
