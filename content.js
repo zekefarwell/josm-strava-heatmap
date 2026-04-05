@@ -114,9 +114,6 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
 {
     let title = `Strava Heatmap (${map_color}/${map_type})`;
     let open_in_josm_url = buildJosmUrl(title, cookies, heatmap_url);
-    let encoded_heatmap_url = encodeURIComponent(heatmap_url);
-    let open_in_id_url = `https://www.openstreetmap.org/edit?editor=id#background=custom:${encoded_heatmap_url}`;
-    let heatmap_url_tms = `tms:${heatmap_url}`;
 
     document.querySelector('#jsh-modal-header').textContent = "Open heatmap in OSM editor";
     document.querySelector('#jsh-modal-body').innerHTML = `
@@ -124,21 +121,8 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
             <a id="jsh-open-in-josm" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
                 Open in JOSM
             </a>
-            <a id="jsh-open-in-id" href="" target="_blank" rel="noopener noreferrer" class="btn btn-default">
-                Open in iD
-            </a>
         </p>
         <p>Or, copy the URL to manually add a custom imagery layer in your editor of choice: </p>
-        <div class="btn-group btn-group-sm" data-toggle="buttons">
-            <label id="jsh-tms-prefix-true" class="btn btn-default active" data-tms-prefix="true">
-                <input name="tms_prefix" type="radio" value="true">
-                tms prefix
-            </label>
-            <label id="jsh-tms-prefix-false" class="btn btn-default" data-tms-prefix="false">
-                <input name="tms_prefix" type="radio" value="false">
-                no prefix
-            </label>
-        </div>
         <code>
             <button id="jsh-click-to-copy" class="copy-button btn btn-xs" aria-label="Copy to clipboard" title="Copy to clipboard">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -150,15 +134,8 @@ function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
         </code>
     `;
     document.querySelector("#jsh-open-in-josm").setAttribute("href", open_in_josm_url);
-    document.querySelector("#jsh-open-in-id").setAttribute("href", open_in_id_url);
-    document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
+    document.querySelector("#jsh-imagery-url").textContent = heatmap_url;
     document.querySelector("#jsh-click-to-copy").addEventListener("click", copyUrlToClipboard);
-    document.querySelector("#jsh-tms-prefix-true").addEventListener("click", function () {
-        document.querySelector("#jsh-imagery-url").textContent = heatmap_url_tms;
-    });
-    document.querySelector("#jsh-tms-prefix-false").addEventListener("click", function () {
-        document.querySelector("#jsh-imagery-url").textContent = heatmap_url;
-    });
 }
 
 /**

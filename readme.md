@@ -1,13 +1,18 @@
 # JOSM Strava Heatmap
 
 This browser extension makes it easy to use the [Strava Global Heatmap][1] in
-[JOSM][2], [iD][8], and other mapping applications that support TMS imagery.
+[JOSM][2].
 
 Accessing this imagery externally requires a set of key parameters that you obtain
-by signing into the Strava website, copying the values from several cookies, and
-then assembling into a query string at the end of the url.  The keys expire after a
-week or so at which point you must repeat the process.  This extension builds the
-url for you which makes this weekly process a bit less annoying.  
+by signing into the Strava website, copying the values from several cookies which 
+must be included with imagery requests from JOSM in a custom header.  The keys expire 
+frequently and the process must be repeated.  This extension gathers the url and cookie
+values automatically so you can quickly open the imagery in JOSM.
+
+This extension used to also allow for opening the imagery as a background in the iD Editor.
+The cookie requirement for imagery access makes this no longer possible.  Thankfully 
+[julcnx/strava-heatmap-extension][10] now extends the iD editor itself, 
+adding the heatmap as an overlay.
 
 OSM Wiki: [Using the Strava Heatmap][3]
 
@@ -15,6 +20,7 @@ OSM Wiki: [Using the Strava Heatmap][3]
 [2]: https://josm.openstreetmap.de/ "Java OpenStreetMap Editor"
 [3]: https://wiki.openstreetmap.org/wiki/Strava
 [8]: https://www.openstreetmap.org
+[10]: https://github.com/julcnx/strava-heatmap-extension
 
 ## Installation
 
@@ -25,16 +31,11 @@ should also work in Microsoft Edge and other Chromium based browsers.
 
 1. Visit [strava.com/heatmap][5] and log in – sign up for a free account if you don't have one
 2. *Optional* - Select the heatmap color and activity type you want to use
-3. Click the button pictured below to get the TMS imagery url prepopulated with the required
-   `Key-Pair-Id`, `Policy`, and `Signature` parameters
+3. Click the button pictured below
 
 ![Screenshot of Strava Heatmap with button added](screenshot.png)
 
-4. Open the heatmap in your editor
-   - Click the appropriate button to open the heatmap in either JOSM or iD.
-     For [JOSM, Remote control][9] must be enabled
-   - Alternatively you can copy the url (with or without the `tms:` prefix) and paste
-     it into a custom imagery layer in you editor
+4. Click the Open in JOSM button ([JOSM, Remote control][9] must be enabled)
 
 ![Screenshot of modal dialog with heatmap url](screenshot2.png)
 
@@ -46,11 +47,6 @@ Copy the url without the `tms:` prefix.  Add a new TMS layer in the [JOSM imager
 Name it Strava Heatmap and paste in the copied url.  If you are updating an expired Strava Heatmap
 layer you can just double-click it to replace url in the list view.  In this case, copy the url
 *with* the `tms:` prefix as it is required here.
-
-### Manually adding the imagery in iD
-
-Copy the url without the `tms:` prefix.  Open the Backgrounds panel and select "Custom" at the bottom.
-Paste the copied url into the Custom Background Settings window that opens.
 
 [4]: https://addons.mozilla.org/en-US/firefox/addon/josm-strava-heatmap/
 [5]: https://www.strava.com/heatmap
