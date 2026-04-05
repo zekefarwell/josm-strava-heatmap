@@ -75,7 +75,7 @@ async function openModalDialog(e)
             setModalHtmlSuccess(
                 response.heatmap_url,
                 response.map_color,
-                response.map_type,
+                response.sport,
                 new Map(Object.entries(response.cookies)),
             );
         }
@@ -109,9 +109,9 @@ function buildJosmUrl(title, cookie_header, heatmap_url)
 /**
  * Set the HTML content of the modal after successfully building the heatmap url
  */
-function setModalHtmlSuccess(heatmap_url, map_color, map_type, cookies)
+function setModalHtmlSuccess(heatmap_url, map_color, sport, cookies)
 {
-    let title = `Strava Heatmap (${map_color}/${map_type})`;
+    let title = `Strava Heatmap (${map_color}/${sport})`;
     // Join cookie keys and values together into HTTP header string format
     const cookie_header = cookies.entries().map(([key, value]) => `${key}=${value}`).toArray().join(';');
     let open_in_josm_url = buildJosmUrl(title, cookie_header, heatmap_url);
