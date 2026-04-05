@@ -12,6 +12,12 @@ button.jsh-modal-toggle {
     pointer-events: auto;
 }
 
+@media (max-width: 800px) {
+    button.jsh-modal-toggle {
+        margin: 10px;
+    }
+}
+
 .jsh-modal {
     display: none;
 }
