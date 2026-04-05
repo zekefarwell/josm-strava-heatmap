@@ -33,7 +33,7 @@ should also work in Microsoft Edge and other Chromium based browsers.
 2. *Optional* - Select the heatmap color and activity type you want to use
 3. Click the button pictured below
 
-![Screenshot of Strava Heatmap with button added](screenshot.png)
+<img src=screenshot.jpg width=640 alt="Screenshot of Strava Heatmap with button added"/>
 
 4. Click the Open in JOSM button ([JOSM, Remote control][9] must be enabled)
 
