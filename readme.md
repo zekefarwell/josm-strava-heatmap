@@ -37,18 +37,14 @@ should also work in Microsoft Edge and other Chromium based browsers.
 
 4. Click the Open in JOSM button ([JOSM, Remote control][9] must be enabled)
 
-![Screenshot of modal dialog with heatmap url](screenshot2.png)
+<img src=screenshot2.jpg width=640 alt="Screenshot of modal dialog with heatmap url pattern and cookie header"/>
 
 [9]: https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl
 
-### Manually adding the imagery in JOSM
+### Using the imagery in other applications
 
-Copy the url without the `tms:` prefix.  Add a new TMS layer in the [JOSM imagery preferences][6].
-Name it Strava Heatmap and paste in the copied url.  If you are updating an expired Strava Heatmap
-layer you can just double-click it to replace url in the list view.  In this case, copy the url
-*with* the `tms:` prefix as it is required here.
+The raw URL pattern and cookie header strings are also exposed for other potential uses.  These can theoretically be used in any mapping application that supports adding a TMS imagery source with a custom cookie header like JOSM does.
 
 [4]: https://addons.mozilla.org/en-US/firefox/addon/josm-strava-heatmap/
 [5]: https://www.strava.com/heatmap
-[6]: https://josm.openstreetmap.de/wiki/Help/Preferences/Imagery
 [7]: https://chrome.google.com/webstore/detail/josm-strava-heatmap/hicmfobjcbinceoeegookkgllpdgkcdc
