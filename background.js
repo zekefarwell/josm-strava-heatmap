@@ -39,6 +39,7 @@ async function getHeatmapUrl(tab_url, store_id)
         case 'gray':
         case 'bluered':
         case 'mobileblue':
+        case 'orange':
             map_color = gColor;
             break;
         default:
