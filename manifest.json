@@ -3,6 +3,11 @@
   "name": "JOSM Strava Heatmap",
   "description": "A browser extension that simplifies using Strava Heatmap imagery in JOSM",
   "version": "6",
+  "browser_specific_settings": {
+	  "gecko": {
+		  "id": "{7e3ed9ab-2f3c-4263-90a4-b16ec4acc321}"
+		}
+	},
   "icons": {
     "48": "icons/icon.png"
   },
