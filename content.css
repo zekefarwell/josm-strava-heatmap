@@ -1,7 +1,7 @@
 button.jsh-modal-toggle {
     position: fixed;
-    top: 80px;
-    right: 10px;
+    top: 130px;
+    right: 16px;
     z-index: 50;
     border: none;
     border-radius: 3px;
