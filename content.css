@@ -1,9 +1,12 @@
 button.jsh-modal-toggle {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    z-index: 50;
     border: none;
     border-radius: 3px;
     width: 40px;
     height: 40px;
-    margin: 80px 10px 10px;
     padding: 0;
     background-color: white;
     /* background-image: url('icons/icon.svg'); */
@@ -14,10 +17,7 @@ button.jsh-modal-toggle {
 
 @media (max-width: 800px) {
     button.jsh-modal-toggle {
-        margin: 10px;
-    }
-    .mapboxgl-control-container > .mapboxgl-ctrl-top-right {
-        z-index: 50;
+        top: 60px;
     }
 }
 
