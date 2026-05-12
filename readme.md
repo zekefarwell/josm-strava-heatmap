@@ -1,6 +1,6 @@
 # JOSM Strava Heatmap
 
-**NOTE:** This is simply a fork/clone of [zekefarwell/josm-strava-heatmap][11] that I ran through Claude Opus 4.7 to fix the extension not working after Strava switched map libraries.
+**NOTE:** This is simply a fork/clone of [zekefarwell/josm-strava-heatmap][11] that I ran through Claude Opus 4.7 to fix the extension not working after Strava switched map libraries. Issue was reported [here](https://github.com/zekefarwell/josm-strava-heatmap/issues/23).
 
 ----
 
