@@ -1,5 +1,9 @@
 # JOSM Strava Heatmap
 
+**NOTE:** This is simply a fork/clone of [zekefarwell/josm-strava-heatmap][11] that I ran through Claude Opus 4.7 to fix the extension not working after Strava switched map libraries.
+
+----
+
 This browser extension makes it easy to use the [Strava Global Heatmap][1] in
 [JOSM][2].
 
@@ -21,6 +25,7 @@ OSM Wiki: [Using the Strava Heatmap][3]
 [3]: https://wiki.openstreetmap.org/wiki/Strava
 [8]: https://www.openstreetmap.org
 [10]: https://github.com/julcnx/strava-heatmap-extension
+[11]: https://github.com/zekefarwell/josm-strava-heatmap
 
 ## Installation
 
