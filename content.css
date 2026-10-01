@@ -1,26 +1,18 @@
 button.jsh-modal-toggle {
+    position: absolute;
+    bottom: 44px;
+    right: 10px;
+    z-index: 100;
     border: none;
     border-radius: 3px;
     width: 40px;
     height: 40px;
-    margin: 80px 10px 10px;
     padding: 0;
     background-color: white;
-    /* background-image: url('icons/icon.svg'); */
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
     cursor: pointer;
     pointer-events: auto;
 }
-
-@media (max-width: 800px) {
-    button.jsh-modal-toggle {
-        margin: 10px;
-    }
-    .mapboxgl-control-container > .mapboxgl-ctrl-top-right {
-        z-index: 50;
-    }
-}
-
 .jsh-modal {
     display: none;
 }
