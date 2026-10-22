@@ -41,6 +41,23 @@ should also work in Microsoft Edge and other Chromium based browsers.
 
 [9]: https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl
 
+### Adding the imagery to JOSM manually
+
+If Remote Control isn't available or the Open in JOSM button doesn't work, you can add
+the layer by hand using the URL pattern and cookie header shown in the dialog:
+
+1. In JOSM, open Preferences (F12) → Imagery and click the **+TMS** button
+2. Paste the URL pattern exactly as shown, starting with `https://` – do **not** add a
+   `tms:` prefix, JOSM adds it for you
+3. Set the maximum zoom level to **15** (the highest zoom Strava heatmaps support)
+4. Under "Set custom HTTP headers", add a header named `Cookie` and paste the cookie
+   header string as its value
+5. Give the layer a name, click OK, and enable it from the Imagery menu
+
+When the cookies expire, the tiles stop loading.  Get a fresh cookie header from the
+extension and replace the value in the layer's settings (Preferences → Imagery, select
+the layer, edit).  A recent version of JOSM is required for custom HTTP headers.
+
 ### Using the imagery in other applications
 
 The raw URL pattern and cookie header strings are also exposed for other potential uses.  These can theoretically be used in any mapping application that supports adding a TMS imagery source with a custom cookie header like JOSM does.
