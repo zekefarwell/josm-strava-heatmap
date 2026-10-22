@@ -54,9 +54,10 @@ the layer by hand using the URL pattern and cookie header shown in the dialog:
    header string as its value
 5. Give the layer a name, click OK, and enable it from the Imagery menu
 
-When the cookies expire, the tiles stop loading.  Get a fresh cookie header from the
-extension and replace the value in the layer's settings (Preferences → Imagery, select
-the layer, edit).  A recent version of JOSM is required for custom HTTP headers.
+When the cookies expire, the tiles stop loading.  JOSM doesn't allow editing the headers
+of an existing imagery entry, so remove the old layer (Preferences → Imagery, select it,
+click remove) and add it again with a fresh cookie header from the extension.  A recent
+version of JOSM is required for custom HTTP headers.
 
 ### Using the imagery in other applications
 
